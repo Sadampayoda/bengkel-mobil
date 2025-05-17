@@ -1,0 +1,40 @@
+<div class="bg-white mt-4 p-4 rounded shadow m-4">
+    <form id="<?= $form->setForm() ?>" method="<?= $form->setMethod() ?>" enctype="<?= $form->setEnctype() ?>">
+        <?php if ($form->setMethod() == 'PUT'): ?>
+            <input type="hidden" name="id" id="id" value="<?= $id ?>">
+        <?php endif; ?>
+        <div class="p-3 overflow-auto" style="max-height: 440px;">
+            <?php $form ?? '' ?>
+            <div class="row">
+                <?php foreach ($input as $row): ?>
+                    <div class="mb-3 col-md-6">
+                        <?php 
+                        $row['type'] = $row['type'] ?? 'text';
+                        if ($row['type'] !== 'hidden'): ?>
+                            <label for="<?= $row['name'] ?? 'name' ?>" class="form-label"><?= $row['label'] ?? '' ?></label>
+                            <input
+                                type="<?= $row['type'] ?? 'text' ?>"
+                                name="<?= $row['name'] ?>"
+                                id="<?= $row['id'] ?? $row['name'] ?? '' ?>"
+                                placeholder="<?= $row['placeholder'] ?? '' ?>"
+                                <?= $row['required'] ? 'required' : null ?>
+                                class="form-control bg-light"
+                                value="<?= $row['value'] ?? null ?>">
+                        <?php else: ?>
+                            <input
+                                type="hidden"
+                                name="<?= $row['name'] ?>"
+                                id="<?= $row['id'] ?? $row['name'] ?? '' ?>"
+                                value="<?= $row['value'] ?? null ?>">
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="d-flex align-items-center gap-2 p-2">
+            <button type="button" onclick="<?= $form->onClick() ?>('<?= $form->setForm() ?>','<?= $form->setMethod() ?>')" class="btn btn-primary">Simpan</button>
+            <button type="button" class="btn btn-secondary">Batal</button>
+        </div>
+    </form>
+</div>
