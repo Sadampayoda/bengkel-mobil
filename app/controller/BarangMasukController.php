@@ -1,20 +1,26 @@
 <?php
 
 namespace App\Controller;
-use App\Model\JenisSatuan;
-include __DIR__.'/../model/JenisSatuan.php';
 
-class JenisSatuanController {
+use App\Model\BarangMasuk;
+include_once __DIR__.'/../model/BarangMasuk.php';
+
+
+class BarangMasukController {
 
     protected $model;
     public function __construct()
     {
-        $this->model = new JenisSatuan();
+        $this->model = new BarangMasuk();
     }
     
-    public function index($type = 'jenis')
+    public function index()
     {
-        return $this->model->all()->where('type',' = ',$type)->get();
+        return $this->model->all('*,barang_masuks.id as id,barang_masuks.created_at as tanggal,stok_barangs.name as barang,jenis_satuans.name as jenis,suppliers.name as supplier')
+        ->with('barangDesc')
+        ->with('jenisDesc')
+        ->with('supplierDesc')
+        ->get();
     }
 
     public function store($request)
@@ -29,7 +35,7 @@ class JenisSatuanController {
             return null;
         }
         $row = $this->model->all()->where('id',' = ',$id)->get();
-        return $row ? $row[0] : null;
+        return $row[0] ?? null;
     }
 
     public function update($request,$id)
@@ -43,5 +49,4 @@ class JenisSatuanController {
         $delete = $this->model->delete('id',$id);
         return $delete ?? null;
     }
-
 }

@@ -6,20 +6,28 @@ namespace App\Config;
 use App\Traits\QueryTraits;
 use App\Config\Database;
 
-include __DIR__ . '/../traits/QueryTraits.php';
-include __DIR__ . '/database.php';
+include_once __DIR__ . '/../traits/QueryTraits.php';
+include_once __DIR__ . '/database.php';
 
 class Model extends Database
 {
 
     use QueryTraits;
 
-
     public function get()
     {
         $result = $this->connect()->query($this->query);
         if ($result && $result->num_rows > 0) {
-            return $result->fetch_all(MYSQLI_ASSOC);
+            $data = $result->fetch_all(MYSQLI_ASSOC);
+            if (isset($this->enum)) {
+                $data = $this->dataEnum($data, $this->enum);
+            }
+            if(isset($this->timestamps))
+            {
+                $data = $this->setTimesStamps($data,$this->timestamps);
+            }
+
+            return $data;
         }
 
         return null;
@@ -27,6 +35,10 @@ class Model extends Database
 
     public function create($data)
     {
+
+        $timestamp = date('Y-m-d H:i:s');
+        $data['created_at'] = $timestamp;
+        $data['updated_at'] = $timestamp;
 
 
         $columns = implode(", ", array_keys($data));
@@ -79,6 +91,9 @@ class Model extends Database
         $setParts = [];
         $values = [];
 
+        $timestamp = date('Y-m-d H:i:s');
+        $data['updated_at'] = $timestamp;
+
 
         foreach ($data as $key => $value) {
             $setParts[] = "$key = ?";
@@ -119,7 +134,7 @@ class Model extends Database
             die("Prepare failed: " . $this->connect()->error);
         }
 
-    
+
         $type = is_int($value) ? 'i' : 's';
         $stmt->bind_param($type, $value);
 
@@ -128,5 +143,36 @@ class Model extends Database
         }
 
         return $stmt->affected_rows;
+    }
+
+    private function dataEnum($data, $enum)
+    {
+        foreach ($data as $key => $value) {
+            foreach ($enum as $enumKey => $enumValues) {
+                if (isset($value[$enumKey]) && isset($enumValues[$value[$enumKey]])) {
+                    $data[$key][$enumKey] = $enumValues[$value[$enumKey]];
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    private function setTimesStamps($data,$timestamp)
+    {
+        foreach ($data as $key => $value) {
+            if(isset($value['created_at']) && isset($value['updated_at']))
+            {
+                $data[$key]['created_at'] = date($timestamp, strtotime($value['created_at']));
+                $data[$key]['updated_at'] = date($timestamp, strtotime($value['updated_at']));
+            } 
+            
+            if(isset($value[$this->columnTimestamps]))
+            {
+                $data[$key][$this->columnTimestamps] = date($timestamp, strtotime($value[$this->columnTimestamps]));
+                
+            }
+        }
+        return $data;
     }
 }

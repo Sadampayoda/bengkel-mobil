@@ -8,18 +8,30 @@
             <div class="row">
                 <?php foreach ($input as $row): ?>
                     <div class="mb-3 col-md-6">
-                        <?php 
+                        <?php
                         $row['type'] = $row['type'] ?? 'text';
                         if ($row['type'] !== 'hidden'): ?>
-                            <label for="<?= $row['name'] ?? 'name' ?>" class="form-label"><?= $row['label'] ?? '' ?></label>
-                            <input
-                                type="<?= $row['type'] ?? 'text' ?>"
-                                name="<?= $row['name'] ?>"
-                                id="<?= $row['id'] ?? $row['name'] ?? '' ?>"
-                                placeholder="<?= $row['placeholder'] ?? '' ?>"
-                                <?= $row['required'] ? 'required' : null ?>
-                                class="form-control bg-light"
-                                value="<?= $row['value'] ?? null ?>">
+                            <?php if ($row['type'] == 'select'): ?>
+                                <label class="form-label" for="<?= $row['name'] ?? 'name' ?>"><?= $row['label'] ?? '' ?></label>
+                                <select class="form-select bg-light py-2" name="<?= $row['name'] ?? 'name' ?>" id="<?= $row['id'] ?? $row['name'] ?>">
+                                    <option value=""><?= $row['placeholder'] ?? 'Pilih' ?></option>
+                                    <?php foreach ($row['data'] as $rows): ?>
+                                        <option
+                                            <?= $row['value'] == $rows['id'] ? 'selected' : null; ?>
+                                            value="<?= $rows['id'] ?>"><?= $rows['name'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            <?php else: ?>
+                                <label for="<?= $row['name'] ?? 'name' ?>" class="form-label"><?= $row['label'] ?? '' ?></label>
+                                <input
+                                    type="<?= $row['type'] ?? 'text' ?>"
+                                    name="<?= $row['name'] ?>"
+                                    id="<?= $row['id'] ?? $row['name'] ?? '' ?>"
+                                    placeholder="<?= $row['placeholder'] ?? '' ?>"
+                                    <?= $row['required'] ? 'required' : null ?>
+                                    class="form-control bg-light"
+                                    value="<?= $row['value'] ?? null ?>">
+                            <?php endif; ?>
                         <?php else: ?>
                             <input
                                 type="hidden"

@@ -26,20 +26,19 @@ $form = new FormRepository('form-jenis', $method, '', 'formJenis');
 
 $input = [
     [
-        'label' => 'Nama Jenis',
+        'label' => 'Nama Satuan',
         'name' => 'name',
         'id' => 'name',
-        'placeholder' => 'Nama Jenis',
+        'placeholder' => 'Nama Satuan',
         'required' => true,
         'value' => @$data['name'],
     ],
     [
-        'label' => 'Nama Jenis',
-        'name' => 'name',
-        'id' => 'name',
-        'placeholder' => 'Nama Jenis',
-        'required' => true,
-        'value' => @$data['name'],
+
+        'name' => 'type',
+        'id' => 'type',
+        'type' => 'hidden',
+        'value' => 'satuan',
     ]
 ];
 

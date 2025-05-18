@@ -66,19 +66,19 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="components/gridsystem.html">
+                                <a href="<?= BASE_URL ?>/dashboard/stok/">
                                     <i class="fas fa-warehouse me-2"></i>
                                     <span class="sub-item">Stok Barang</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="components/panels.html">
+                                <a href="<?= BASE_URL ?>/dashboard/barang-masuk/">
                                     <i class="fas fa-arrow-circle-down me-2"></i>
                                     <span class="sub-item">Barang Masuk</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="components/notifications.html">
+                                <a href="<?= BASE_URL ?>/dashboard/barang-keluar/">
                                     <i class="fas fa-arrow-circle-up me-2"></i>
                                     <span class="sub-item">Barang Keluar</span>
                                 </a>
@@ -88,7 +88,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#supplier">
+                    <a href="<?= BASE_URL ?>/dashboard/supplier/">
                         <i class="fas fa-truck"></i>
                         <p>Supplier</p>
                     </a>
@@ -122,7 +122,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="components/gridsystem.html">
+                                <a href="<?= BASE_URL ?>/dashboard/mekanik/">
                                     <i class="fas fa-user-cog me-2"></i>
                                     <span class="sub-item">Daftar Mekanik</span>
                                 </a>
@@ -140,13 +140,13 @@
                     <div class="collapse" id="laporan">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="<?= BASE_URL ?>/dashboard/jenis/">
+                                <a href="<?= BASE_URL ?>/dashboard/laporan/barang-masuk/">
                                     <i class="fas fa-arrow-circle-down me-2"></i>
                                     <span class="sub-item">Barang Masuk</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="components/buttons.html">
+                                <a href="<?= BASE_URL ?>/dashboard/laporan/barang-keluar/">
                                     <i class="fas fa-arrow-circle-up me-2"></i>
                                     <span class="sub-item">Barang Keluar</span>
                                 </a>
@@ -158,7 +158,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="components/gridsystem.html">
+                                <a href="<?= BASE_URL ?>/dashboard/laporan/supplier/">
                                     <i class="fas fa-truck-loading me-2"></i>
                                     <span class="sub-item">Suppliar</span>
                                 </a>

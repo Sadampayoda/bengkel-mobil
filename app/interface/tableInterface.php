@@ -15,4 +15,6 @@ interface TableInterface{
 
     public function clickDelete();
 
+    public function action();
+
 }
