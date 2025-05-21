@@ -16,6 +16,11 @@ class MekanikController {
     
     public function index()
     {
+        if(isset($_GET['search']))
+        {
+            return $this->model->all('*,mekaniks.created_at as tanggal')
+            ->where('name','LIKE','%'.$_GET['search'].'%')->get();
+        }
         return $this->model->all('*,mekaniks.created_at as tanggal')->get();
     }
 

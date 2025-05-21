@@ -16,6 +16,6 @@ interface FormInterface {
 
     public function validate();
 
-    
+    public function detail();
 
 }

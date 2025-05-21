@@ -8,13 +8,14 @@ include __DIR__.'/../interface/formInterface.php';
 
 class FormRepository implements FormInterface
 {
-    protected $name ,$method, $enctype, $onclick;
-    public function __construct($name = 'form',$method = 'GET',$enctype = '',$onclick)
+    protected $name ,$method, $enctype, $onclick, $detail;
+    public function __construct($name = 'form',$method = 'GET',$enctype = '',$onclick,$detail = false)
     {
         $this->name = $name;
         $this->method = $method;
         $this->enctype = $enctype;
         $this->onclick = $onclick;
+        $this->detail = $detail;
     }
 
     public function setForm()
@@ -42,6 +43,12 @@ class FormRepository implements FormInterface
     {
         return $this->onclick;
     }
+
+    public function detail()
+    {
+        return $this->detail;
+    }
+
 
 
     

@@ -3,22 +3,31 @@
 namespace App\Controller;
 
 use App\Model\BarangKeluar;
-include_once __DIR__.'/../model/BarangKeluar.php';
+
+include_once __DIR__ . '/../model/BarangKeluar.php';
 
 
-class BarangKeluarController {
+class BarangKeluarController
+{
 
     protected $model;
     public function __construct()
     {
         $this->model = new BarangKeluar();
     }
-    
+
     public function index()
     {
+        if (isset($_GET['start']) || isset($_GET['end'])) {
+
+            return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,stok_barangs.name as barang')
+                ->with('barangDesc')
+                ->whereBetween('barang_keluars.created_at', $_GET['start'], $_GET['end'])
+                ->get();
+        }
         return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,stok_barangs.name as barang')
-        ->with('barangDesc')
-        ->get();
+            ->with('barangDesc')
+            ->get();
     }
 
     public function store($request)
@@ -28,23 +37,22 @@ class BarangKeluarController {
 
     public function show($id)
     {
-        if(!$id)
-        {
+        if (!$id) {
             return null;
         }
-        $row = $this->model->all()->where('id',' = ',$id)->get();
+        $row = $this->model->all()->where('id', ' = ', $id)->get();
         return $row[0] ?? null;
     }
 
-    public function update($request,$id)
+    public function update($request, $id)
     {
-        $update = $this->model->update($request,['id' => $id]);
+        $update = $this->model->update($request, ['id' => $id]);
         return $update ?? null;
     }
 
     public function destroy($id)
     {
-        $delete = $this->model->delete('id',$id);
+        $delete = $this->model->delete('id', $id);
         return $delete ?? null;
     }
 }

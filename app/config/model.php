@@ -33,6 +33,11 @@ class Model extends Database
         return null;
     }
 
+    public function count()
+    {
+        return count($this->get() ?? []);
+    }
+
     public function create($data)
     {
 

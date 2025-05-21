@@ -4,7 +4,7 @@ use App\Controller\SupplierController;
 
 include __DIR__.'/../../../app/controller/SupplierController.php';
 $data = new SupplierController();
-
+$search = '/dashboard/laporan/supplier/';
 ob_start() ?>
 
 

@@ -12,12 +12,12 @@ ob_start() ?>
 
 <?php
 
-// var_dump($data->index());
+
 $title = 'Laporan Barang Masuk';
 include __DIR__ . '/../../../app/repository/tableRepository.php';
 $table = new TableRepository(['tanggal','barang','jenis','supplier','jumlah'],$data->index(),'onEditBarangMasuk','onDeleteBarangMasuk',false);
 
-
+$search = '/dashboard/laporan/barang-masuk/';
 
 include __DIR__ . '/../../../components/table.php'
 ?>

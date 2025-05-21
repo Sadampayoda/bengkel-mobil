@@ -17,7 +17,7 @@ include __DIR__ . '/../../app/repository/tableRepository.php';
 $table = new TableRepository(['name','alamat','telepon','active'],$data->index(),'onEditSupplier','onDeleteSupplier');
 
 
-
+$search = '/dashboard/supplier/';
 include __DIR__ . '/../../components/table.php'
 ?>
 

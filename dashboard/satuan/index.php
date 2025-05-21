@@ -15,6 +15,8 @@ include __DIR__ . '/../../app/repository/tableRepository.php';
 $table = new TableRepository(['name'],$data->index('satuan'),'onEditSatuan','onDeleteSatuan');
 
 
+$search = '/dashboard/satuan/';
+
 
 include __DIR__ . '/../../components/table.php'
 ?>

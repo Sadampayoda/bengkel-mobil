@@ -22,6 +22,7 @@
                                     <?php endforeach; ?>
                                 </select>
                             <?php else: ?>
+                                <!-- <?= var_dump($row) ?> -->
                                 <label for="<?= $row['name'] ?? 'name' ?>" class="form-label"><?= $row['label'] ?? '' ?></label>
                                 <input
                                     type="<?= $row['type'] ?? 'text' ?>"
@@ -30,7 +31,7 @@
                                     placeholder="<?= $row['placeholder'] ?? '' ?>"
                                     <?= $row['required'] ? 'required' : null ?>
                                     class="form-control bg-light"
-                                    value="<?= $row['value'] ?? null ?>">
+                                    value="<?= $row['value'] ?? null ?>" <?= isset($row['readonly']) ? 'readonly' : null ?>>
                             <?php endif; ?>
                         <?php else: ?>
                             <input
@@ -42,7 +43,40 @@
                     </div>
                 <?php endforeach; ?>
             </div>
+            <?php if ($form->detail()): ?>
+                <div class="row">
+                    <div class="col-8 mb-2">
+                        <select id="select-barang" class="form-select" placeholder="Cari Barang" autocomplete="off">
+                            <option value="">Select Barang</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <table id="detail" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Nama Barang</th>
+                                    <th>Jumlah</th>
+                                    <th>Harga</th>
+                                    <th>Hapus</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <label class="form-label" for="total_harga_barang">Total Harga Barang</label>
+                        <input type="number" name="total_harga_barang" id="total_harga_barang" placeholder="Total Harga Barang" class="form-control" readonly >
+                    </div>
+                </div>
+            <?php endif; ?>
         </div>
+
 
         <div class="d-flex align-items-center gap-2 p-2">
             <button type="button" onclick="<?= $form->onClick() ?>('<?= $form->setForm() ?>','<?= $form->setMethod() ?>')" class="btn btn-primary">Simpan</button>
@@ -50,3 +84,7 @@
         </div>
     </form>
 </div>
+
+<script>
+
+</script>

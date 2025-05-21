@@ -1,6 +1,9 @@
 <?php
 include __DIR__ . '/../app/config/app.php';
+include __DIR__ . '/../app/config/session.php';
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +44,8 @@ include __DIR__ . '/../app/config/app.php';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <style>
         ::-webkit-scrollbar {
             width: 1px;
@@ -60,8 +65,10 @@ include __DIR__ . '/../app/config/app.php';
     </div>
 
     <?php include __DIR__ . '/../components/js.php' ?>
-    <script src="<?= BASE_URL ?>/js/core/jquery-3.7.1.min.js"></script>
-    <script src="<?= BASE_URL ?>/js/core/popper.min.js"></script>
+    <script src="<?= BASE_URL ?>/js/core/jquery-3.7.1.min.js">
+        < /> <
+        script src = "<?= BASE_URL ?>/js/core/popper.min.js" >
+    </script>
     <script src="<?= BASE_URL ?>/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->

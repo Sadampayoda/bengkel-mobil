@@ -31,14 +31,17 @@
                     class="navbar navbar-header-left navbar-expand-lg navbar-form nav-search p-0 d-none d-lg-flex">
                     <div class="input-group">
                         <div class="input-group-prepend">
-                            <button type="submit" class="btn btn-search pe-1">
+                            <button type="button" onclick="onSearch('<?= $search ?? '' ?>')" class="btn btn-search pe-1">
                                 <i class="fa fa-search search-icon"></i>
                             </button>
                         </div>
                         <input
                             type="text"
                             placeholder="Search ..."
-                            class="form-control" />
+                            class="form-control"
+                            id="search" 
+                            value="<?= $_GET['search'] ?? ''?>"
+                            />
                     </div>
                 </nav>
 
@@ -92,7 +95,7 @@
                                         <a href="#">
                                             <div class="notif-img">
                                                 <img
-                                                    src="assets/img/jm_denis.jpg"
+                                                    src="<?= BASE_URL ?>/assets/default.jpg"
                                                     alt="Img Profile" />
                                             </div>
                                             <div class="notif-content">
@@ -304,13 +307,13 @@
                             aria-expanded="false">
                             <div class="avatar-sm">
                                 <img
-                                    src="assets/img/profile.jpg"
+                                    src="<?= BASE_URL ?>/assets/default.jpg"
                                     alt="..."
                                     class="avatar-img rounded-circle" />
                             </div>
                             <span class="profile-username">
                                 <span class="op-7">Hi,</span>
-                                <span class="fw-bold">Hizrian</span>
+                                <span class="fw-bold"><?= $_SESSION['user']['name'] ?></span>
                             </span>
                         </a>
                         <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -319,28 +322,27 @@
                                     <div class="user-box">
                                         <div class="avatar-lg">
                                             <img
-                                                src="assets/img/profile.jpg"
+                                                src="<?= BASE_URL ?>/assets/default.jpg"
                                                 alt="image profile"
                                                 class="avatar-img rounded" />
                                         </div>
                                         <div class="u-text">
-                                            <h4>Hizrian</h4>
-                                            <p class="text-muted">hello@example.com</p>
-                                            <a
+                                            <h4><?= $_SESSION['user']['name'] ?></h4>
+                                            <p class="text-muted"><?= $_SESSION['user']['email'] ?></p>
+                                            <!-- <a
                                                 href="profile.html"
-                                                class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                                                class="btn btn-xs btn-secondary btn-sm">View Profile</a> -->
                                         </div>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">My Profile</a>
-                                    <a class="dropdown-item" href="#">My Balance</a>
-                                    <a class="dropdown-item" href="#">Inbox</a>
+                                    <a class="dropdown-item" href="<?= BASE_URL ?>/">Dashboard</a>
+                                    <a class="dropdown-item" href="<?= BASE_URL ?>/dashboard/order/">Order</a>
+                                    <!-- <div class="dropdown-divider"></div> -->
+                                    <!-- <a class="dropdown-item" href="<?= BASE_URL ?>/dashboard/profile/">Edit Profile</a> -->
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Account Setting</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Logout</a>
+                                    <button type="button" onclick="onLogout()" class="dropdown-item" >Logout</button>
                                 </li>
                             </div>
                         </ul>

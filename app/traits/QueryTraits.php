@@ -9,7 +9,7 @@ trait QueryTraits
 
     public function all(string $view = '*')
     {
-        $this->query = 'SELECT '.$view.' FROM ' . $this->table;
+        $this->query = 'SELECT ' . $view . ' FROM ' . $this->table;
         return $this;
     }
 
@@ -19,6 +19,32 @@ trait QueryTraits
             $value = "'" . addslashes($value) . "'";
         }
         $this->query .= ' WHERE ' . $column . ' ' . $operator . ' ' . $value;
+        return $this;
+    }
+
+    public function andWhere($column, $operator = ' = ', $value)
+    {
+        if (is_string(value: $value)) {
+            $value = "'" . addslashes($value) . "'";
+        }
+        $this->query .= ' AND ' . $column . ' ' . $operator . ' ' . $value;
+        return $this;
+    }
+
+    public function whereBetween($column, $start, $end)
+    {
+
+        $this->query .= " AND DATE($column) BETWEEN '$start' AND '$end'";
+
+
+
+        return $this;
+    }
+
+    public function whereBetweens($column, $start, $end)
+    {
+        $this->query .= " WHERE DATE($column) BETWEEN '$start' AND '$end'";
+
         return $this;
     }
 

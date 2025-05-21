@@ -30,7 +30,7 @@
                     <div class="collapse" id="dashboard">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="">
+                                <a href="<?= BASE_URL ?>">
                                     <span class="sub-item">Dashboard</span>
                                 </a>
                             </li>
@@ -95,7 +95,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a data-bs-toggle="collapse" href="#pelanggan">
+                    <a href="<?= BASE_URL ?>/dashboard/pelanggan/">
                         <i class="fas fa-user-friends"></i>
                         <p>Pelanggan</p>
                     </a>
@@ -110,13 +110,13 @@
                     <div class="collapse" id="service">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="<?= BASE_URL ?>/dashboard/jenis/">
+                                <a href="<?= BASE_URL ?>/dashboard/status/">
                                     <i class="fas fa-info-circle me-2"></i>
                                     <span class="sub-item">Status</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="components/buttons.html">
+                                <a href="<?= BASE_URL ?>/dashboard/order/">
                                     <i class="fas fa-receipt me-2"></i>
                                     <span class="sub-item">Order</span>
                                 </a>
@@ -152,7 +152,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="components/gridsystem.html">
+                                <a href="<?= BASE_URL ?>/dashboard/laporan/order/">
                                     <i class="fas fa-tools me-2"></i>
                                     <span class="sub-item">Service</span>
                                 </a>

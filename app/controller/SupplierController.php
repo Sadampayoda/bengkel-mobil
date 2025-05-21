@@ -16,6 +16,17 @@ class SupplierController {
     
     public function index()
     {
+        if (isset($_GET['search'])) {
+            return $this->model->all()
+                ->where('name', 'LIKE', '%' . $_GET['search'] . '%')->get();
+        }
+
+        if (isset($_GET['start']) || isset($_GET['end'])) {
+
+            return $this->model->all()->whereBetweens('created_at', $_GET['start'], $_GET['end'])
+                ->get();
+        }
+
         return $this->model->all()->get();
     }
 

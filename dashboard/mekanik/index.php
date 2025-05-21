@@ -17,7 +17,7 @@ include __DIR__ . '/../../app/repository/tableRepository.php';
 $table = new TableRepository(['tanggal','name','telepon','active'],$data->index(),'onEditMekanik','onDeleteMekanik');
 
 
-
+$search = '/dashboard/mekanik/';
 include __DIR__ . '/../../components/table.php'
 ?>
 

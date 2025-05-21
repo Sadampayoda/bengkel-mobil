@@ -17,6 +17,7 @@ $title = 'Laporan Barang Keluar';
 include __DIR__ . '/../../../app/repository/tableRepository.php';
 $table = new TableRepository(['tanggal','barang','penerima','jumlah'],$data->index(),'onEditBarangKeluar','onDeleteBarangKeluar',false);
 
+$search = '/dashboard/laporan/barang-keluar';
 
 
 include __DIR__ . '/../../../components/table.php'

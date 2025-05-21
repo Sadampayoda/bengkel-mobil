@@ -14,7 +14,7 @@ $title = 'Jenis Barang';
 include __DIR__ . '/../../app/repository/tableRepository.php';
 $table = new TableRepository(['name'],$data->index(),'onEditJenis','onDeleteJenis');
 
-
+$search = '/dashboard/jenis/';
 
 include __DIR__ . '/../../components/table.php'
 ?>

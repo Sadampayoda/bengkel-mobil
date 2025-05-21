@@ -12,6 +12,7 @@ ob_start() ?>
 
 <?php
 
+$search = '/dashboard/stok/';
 // var_dump($data->index());
 $title = 'Stok Barang';
 include __DIR__ . '/../../app/repository/tableRepository.php';

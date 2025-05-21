@@ -1,3 +1,16 @@
+<?php 
+$start = date('Y-m-d');
+if(isset($_GET['start'])){
+
+    $start = date("Y-m-d", strtotime(str_replace('-', '/', $_GET['start'])));
+}
+$end = date('Y-m-d');
+if(isset($_GET['end'])){
+
+    $end = date("Y-m-d", strtotime(str_replace('-', '/', $_GET['end'])));
+}
+
+?>
 <div class="card p-4 m-4">
     <div class="card-header">
         <div class="card-title">Data <?= $title ?? '' ?></div>
@@ -13,15 +26,15 @@
                     <div class="row">
                         <div class="col-3">
                             <label for="date_start" class="form-label">Tanggal Mulai</label>
-                            <input type="date" name="date_start" id="date_start" class="form-control ">
+                            <input type="date" name="date_start" id="date_start" max="<?= $end ?>" class="form-control" value="<?= $start ?>">
                         </div>
                         <div class="col-3">
                             <label for="date_end" class="form-label">Tanggal Akhir</label>
-                            <input type="date" name="date_end" id="date_end" class="form-control ">
+                            <input type="date" name="date_end" min="<?= $start ?>" id="date_end" class="form-control" value="<?= $end ?>">
                     
                         </div>
                         <div class="col-3 ">
-                            <button id="filter" class="btn btn-success" style="margin-top: 30px;">
+                            <button id="filter" onclick="onFilter()" class="btn btn-success" style="margin-top: 30px;">
                                 <i class="fas fa-filter"></i>
                                 Filter
                             </button>
@@ -54,7 +67,7 @@
                         <th>NO</th>
                         <?php foreach ($table->title() as $title): ?>
                             <th class="py-5 px-10 font-bold text-lg ">
-                                <?= strtoupper($title) ?>
+                                <?= str_replace("_", " ", strtoupper($title));  ?>
                             </th>
                         <?php endforeach; ?>
                         <?php if ($table->action()): ?>
@@ -71,10 +84,23 @@
                                     <tr>
                                         <td><?= $no ?></td>
                                         <?php foreach ($table->title() as $title): ?>
-                                            <td><?= $value[$title] ?></td>
+                                            <?php if($title == 'status'): ?>
+                                                <td> <span class="py-2 px-3 rounded-3
+                                                    <?= $value[$title] == 'proses' ? 'bg-warning' : ($value[$title] == 'tertunda' ? 'bg-danger' : 'bg-success')  ?>">
+                                                <?= $value[$title] ?></span></td>
+                                            <?php elseif($title == 'invoice'): ?>
+                                                <td>
+                                                    <button onclick="invoice(<?= $value['id'] ?>)" class="btn btn-secondary btn-sm">
+                                                        <i class="bi bi-file-earmark-text"></i>
+                                                    </button>
+                                                </td>
+                                            <?php else: ?>
+                                                <td><?= $value[$title] ?></td>
+                                            <?php endif; ?>
                                         <?php endforeach; ?>
                                         <?php if ($table->action()): ?>
                                             <td>
+                                                
                                                 <button onclick="<?= $table->clickEdit() ?>(<?= $value['id'] ?>)" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
                                                 <button onclick="deleteData('<?= $table->clickDelete() ?>',<?= $value['id'] ?>)" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Hapus</button>
                                             </td>

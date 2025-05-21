@@ -14,6 +14,11 @@ class JenisSatuanController {
     
     public function index($type = 'jenis')
     {
+        if(isset($_GET['search']))
+        {
+            return $this->model->all()->where('type',' = ',$type)
+            ->andWhere('name','LIKE','%'.$_GET['search'].'%')->get();
+        }
         return $this->model->all()->where('type',' = ',$type)->get();
     }
 
