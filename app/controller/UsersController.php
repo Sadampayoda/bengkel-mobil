@@ -44,7 +44,7 @@ class UsersController
     public function authLogin($data)
     {
         $checkData = $this->model->all()->where('email', ' = ', $data['email'])->get();
-        $user = $checkData[0];
+        $user = isset($checkData[0]) ? $checkData[0] : null;
         if ($user > 0 && password_verify($data['password'], $user['password'])) {
             $_SESSION['user'] = $user;
             return ['success' => true, 'message' => 'Login berhasil'];

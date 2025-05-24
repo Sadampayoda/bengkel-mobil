@@ -22,11 +22,13 @@ class BarangMasuk extends Model
 
     public function jenisDesc()
     {
-        return $this->relational('jenis_satuans','jenis_id','id');
+        return $this->relational('jenis','jenis_id','id');
     }
 
     public function supplierDesc()
     {
         return $this->relational('suppliers','supplier_id','id');
     }
+
+    
 }

@@ -26,7 +26,7 @@ class BarangMasukController {
             ->whereBetween('barang_masuks.created_at',$_GET['start'],$_GET['end'])
             ->get();
         }
-        return $this->model->all('*,barang_masuks.id as id,barang_masuks.created_at as tanggal,stok_barangs.name as barang,jenis_satuans.name as jenis,suppliers.name as supplier')
+        return $this->model->all('*,barang_masuks.id as id,barang_masuks.created_at as tanggal,stok_barangs.name as barang,jenis.name as jenis,suppliers.name as supplier')
         ->with('barangDesc')
         ->with('jenisDesc')
         ->with('supplierDesc')

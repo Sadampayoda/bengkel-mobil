@@ -1,6 +1,7 @@
 <?php ob_start() ;
 
-use App\Controller\JenisSatuanController;
+use App\Controller\SatuanController;
+
 
 $editMode = isset($_GET['id']);
 $id = $_GET['id'] ?? null;
@@ -15,14 +16,14 @@ $id = $_GET['id'] ?? null;
 use App\Repository\FormRepository;
 
 include __DIR__ . '/../../app/repository/formRepository.php';
-include __DIR__.'/../../app/controller/JenisSatuanController.php';
+include __DIR__.'/../../app/controller/SatuanController.php';
 
-$controller = new JenisSatuanController();
+$controller = new SatuanController();
 $data = $controller->show($id);
 
 $method = $editMode ? 'PUT' : "POST";
 
-$form = new FormRepository('form-jenis', $method, '', 'formJenis');
+$form = new FormRepository('form-jenis', $method, '', 'formSatuan');
 
 $input = [
     [
@@ -33,13 +34,6 @@ $input = [
         'required' => true,
         'value' => @$data['name'],
     ],
-    [
-
-        'name' => 'type',
-        'id' => 'type',
-        'type' => 'hidden',
-        'value' => 'satuan',
-    ]
 ];
 
 

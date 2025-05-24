@@ -19,11 +19,13 @@ class StokController
     public function index()
     {
         if (isset($_GET['search'])) {
-            return $this->model->all('*,stok_barangs.id as id,stok_barangs.name as name ,jenis_satuans.name as jenis')
+            return $this->model->all('*,stok_barangs.id as id,stok_barangs.name as name ,jenis.name as jenis,satuans.name as satuan')
                 ->with('jenisDesc')
+                ->with('satuanDesc')
                 ->where('stok_barangs.name', 'LIKE', '%' . $_GET['search'] . '%')->get();
         }
-        return $this->model->all('*,stok_barangs.id as id,stok_barangs.name as name ,jenis_satuans.name as jenis')
+        return $this->model->all('*,stok_barangs.id as id,stok_barangs.name as name ,jenis.name as jenis, satuans.name as satuan')
+            ->with('satuanDesc')
             ->with('jenisDesc')->get();
     }
 
@@ -60,5 +62,19 @@ class StokController
             return $data[0];
         }
         return $this->model->all()->where('stok', '>', 20)->get();
+    }
+
+    public function stok()
+    {
+        $data = $this->index();
+        $alert = [];
+        foreach ($data as $item) {
+            if($item['stok'] < 20)
+            {
+                $alert[] = ' Stock Barang '.$item['name'].' akan segera habis ';
+            }
+        }
+
+        return $alert;
     }
 }

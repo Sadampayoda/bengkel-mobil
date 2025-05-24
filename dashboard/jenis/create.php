@@ -1,6 +1,7 @@
 <?php ob_start() ;
 
-use App\Controller\JenisSatuanController;
+use App\Controller\JenisController;
+
 
 $editMode = isset($_GET['id']);
 $id = $_GET['id'] ?? null;
@@ -15,9 +16,9 @@ $id = $_GET['id'] ?? null;
 use App\Repository\FormRepository;
 
 include __DIR__ . '/../../app/repository/formRepository.php';
-include __DIR__.'/../../app/controller/JenisSatuanController.php';
+include __DIR__.'/../../app/controller/JenisController.php';
 
-$controller = new JenisSatuanController();
+$controller = new JenisController();
 $data = $controller->show($id);
 
 $method = $editMode ? 'PUT' : "POST";

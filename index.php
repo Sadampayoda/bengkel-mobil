@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 use App\Controller\DashboardController;
@@ -6,7 +6,7 @@ use App\Controller\DashboardController;
 
 
 
-include __DIR__.'/app/controller/dashboardController.php';
+include __DIR__ . '/app/controller/dashboardController.php';
 $data = new DashboardController();
 $status = $data->index();
 
@@ -19,41 +19,126 @@ ob_start() ?>
     <div class="card-body">
         <div class="row ">
             <div class="col-3">
-                <div class="card bg-warning p-3">
-                    <h4>Stok Barang</h4>
-                    <p><?= $status['stok']; ?></p>
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div
+                                    class="icon-big text-center icon-primary bubble-shadow-small">
+                                    <i class="fas fa-warehouse"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Stok Barang</p>
+                                    <h4 class="card-title"><?= $status['stok'] ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div
+                                    class="icon-big text-center icon-info bubble-shadow-small">
+                                    <i class="fas fa-arrow-circle-down"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Barang Masuk</p>
+                                    <h4 class="card-title"><?= $status['masuk']; ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
-                <div class="card bg-warning p-3">
-                    <h4>Barang Masuk</h4>
-                    <p><?= $status['masuk']; ?></p>
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div
+                                    class="icon-big text-center icon-success bubble-shadow-small">
+                                    <i class="fas fa-arrow-circle-up"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Barang Keluar</p>
+                                    <h4 class="card-title"><?= $status['keluar']; ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
-                <div class="card bg-warning p-3">
-                    <h4>Barang Keluar</h4>
-                    <p><?= $status['keluar']; ?></p>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="card bg-warning p-3">
-                    <h4>Supplier</h4>
-                    <p><?= $status['supplier']; ?></p>
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div
+                                    class="icon-big text-center icon-secondary bubble-shadow-small">
+                                    <i class="fas fa-truck"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Supplier</p>
+                                    <h4 class="card-title"><?= $status['supplier']; ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-3">
-                <div class="card bg-warning p-3">
-                    <h4>Jenis Barang</h4>
-                    <p><?= $status['jenis']; ?></p>
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div
+                                    class="icon-big text-center icon-primary bubble-shadow-small">
+                                    <i class="fas fa-tags"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Jenis Barang</p>
+                                    <h4 class="card-title"><?= $status['jenis'] ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-3">
-                <div class="card bg-warning p-3">
-                    <h4>Satuan Barang</h4>
-                    <p><?= $status['satuan']; ?></p>
+                <div class="card card-stats card-round">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-icon">
+                                <div
+                                    class="icon-big text-center icon-info bubble-shadow-small">
+                                    <i class="fas fa-balance-scale"></i>
+                                </div>
+                            </div>
+                            <div class="col col-stats ms-3 ms-sm-0">
+                                <div class="numbers">
+                                    <p class="card-category">Satuan</p>
+                                    <h4 class="card-title"><?= $status['satuan']; ?></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

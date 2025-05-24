@@ -1,18 +1,18 @@
 <?php
 
-use App\Controller\JenisController;
+use App\Controller\SatuanController;
 header('Content-Type: application/json');
 
 
 
 
-include __DIR__.'/../controller/JenisController.php';
+include __DIR__.'/../controller/SatuanController.php';
 
-$jenis = new JenisController();
+$satuan = new SatuanController();
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     try {
-        $jenis->store($_POST);
+        $satuan->store($_POST);
         echo json_encode(['success' => true, 'message' => 'Data berhasil disimpan','data' => $_POST]);
         exit;
     } catch (Exception $e) {
@@ -26,7 +26,7 @@ if($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
     try {
         parse_str(file_get_contents("php://input"), $putData);
-        $jenis->update( $putData,$putData['id']);
+        $satuan->update( $putData,$putData['id']);
         echo json_encode(['success' => true, 'message' => 'Data berhasil di ubah','data' => $putData]);
         exit;
     } catch (Exception $e) {
@@ -39,7 +39,7 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
     try {
         parse_str(file_get_contents("php://input"), $data);
-        $jenis->destroy($data['id']);
+        $satuan->destroy($data['id']);
         echo json_encode(['success' => true, 'message' => 'Data berhasil di ubah','data' => $data]);
         exit;
     } catch (Exception $e) {

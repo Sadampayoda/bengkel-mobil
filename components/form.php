@@ -13,7 +13,7 @@
                         if ($row['type'] !== 'hidden'): ?>
                             <?php if ($row['type'] == 'select'): ?>
                                 <label class="form-label" for="<?= $row['name'] ?? 'name' ?>"><?= $row['label'] ?? '' ?></label>
-                                <select class="form-select bg-light py-2" name="<?= $row['name'] ?? 'name' ?>" id="<?= $row['id'] ?? $row['name'] ?>">
+                                <select <?= $row['required'] ? 'required' : null ?> class="form-select bg-light py-2" name="<?= $row['name'] ?? 'name' ?>" id="<?= $row['id'] ?? $row['name'] ?>">
                                     <option value=""><?= $row['placeholder'] ?? 'Pilih' ?></option>
                                     <?php foreach ($row['data'] as $rows): ?>
                                         <option
@@ -33,6 +33,11 @@
                                     class="form-control bg-light"
                                     value="<?= $row['value'] ?? null ?>" <?= isset($row['readonly']) ? 'readonly' : null ?>>
                             <?php endif; ?>
+                            <div >
+                                <p id="message_<?= $row['name'] ?>" class="text-muted text-danger">
+
+                                </p>
+                            </div>
                         <?php else: ?>
                             <input
                                 type="hidden"
@@ -80,7 +85,7 @@
 
         <div class="d-flex align-items-center gap-2 p-2">
             <button type="button" onclick="<?= $form->onClick() ?>('<?= $form->setForm() ?>','<?= $form->setMethod() ?>')" class="btn btn-primary">Simpan</button>
-            <button type="button" class="btn btn-secondary">Batal</button>
+            <button type="button" onclick="onBack()" class="btn btn-secondary">Batal</button>
         </div>
     </form>
 </div>

@@ -1,8 +1,8 @@
 <?php 
 
-use App\Controller\JenisSatuanController;
-include __DIR__.'/../../app/controller/JenisSatuanController.php';
-$data = new JenisSatuanController();
+use App\Controller\SatuanController;
+include __DIR__.'/../../app/controller/SatuanController.php';
+$data = new SatuanController();
 
 ob_start() ?>
 
@@ -12,7 +12,7 @@ ob_start() ?>
 
 $title = 'Satuan Barang';
 include __DIR__ . '/../../app/repository/tableRepository.php';
-$table = new TableRepository(['name'],$data->index('satuan'),'onEditSatuan','onDeleteSatuan');
+$table = new TableRepository(['name'],$data->index(),'onEditSatuan','onDeleteSatuan');
 
 
 $search = '/dashboard/satuan/';

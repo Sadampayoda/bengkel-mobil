@@ -1,8 +1,8 @@
 <?php 
 
-use App\Controller\JenisSatuanController;
-include __DIR__.'/../../app/controller/JenisSatuanController.php';
-$data = new JenisSatuanController();
+use App\Controller\JenisController;
+include __DIR__.'/../../app/controller/JenisController.php';
+$data = new JenisController();
 
 ob_start() ?>
 

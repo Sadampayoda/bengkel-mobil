@@ -1,25 +1,26 @@
 <?php
 
 namespace App\Controller;
-use App\Model\JenisSatuan;
-include __DIR__.'/../model/JenisSatuan.php';
+use App\Model\Jenis;
 
-class JenisSatuanController {
+include __DIR__.'/../model/Jenis.php';
+
+class JenisController {
 
     protected $model;
     public function __construct()
     {
-        $this->model = new JenisSatuan();
+        $this->model = new Jenis();
     }
     
-    public function index($type = 'jenis')
+    public function index()
     {
         if(isset($_GET['search']))
         {
-            return $this->model->all()->where('type',' = ',$type)
+            return $this->model->all()
             ->andWhere('name','LIKE','%'.$_GET['search'].'%')->get();
         }
-        return $this->model->all()->where('type',' = ',$type)->get();
+        return $this->model->all()->get();
     }
 
     public function store($request)

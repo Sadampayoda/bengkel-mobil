@@ -1,11 +1,11 @@
-<?php 
+<?php
 $start = date('Y-m-d');
-if(isset($_GET['start'])){
+if (isset($_GET['start'])) {
 
     $start = date("Y-m-d", strtotime(str_replace('-', '/', $_GET['start'])));
 }
 $end = date('Y-m-d');
-if(isset($_GET['end'])){
+if (isset($_GET['end'])) {
 
     $end = date("Y-m-d", strtotime(str_replace('-', '/', $_GET['end'])));
 }
@@ -31,7 +31,7 @@ if(isset($_GET['end'])){
                         <div class="col-3">
                             <label for="date_end" class="form-label">Tanggal Akhir</label>
                             <input type="date" name="date_end" min="<?= $start ?>" id="date_end" class="form-control" value="<?= $end ?>">
-                    
+
                         </div>
                         <div class="col-3 ">
                             <button id="filter" onclick="onFilter()" class="btn btn-success" style="margin-top: 30px;">
@@ -39,12 +39,12 @@ if(isset($_GET['end'])){
                                 Filter
                             </button>
                         </div>
-                        <div class="col-3">
+                        <!-- <div class="col-3">
                             <button id="print" class="btn btn-success" style="margin-top: 30px;">
                                 <i class="fas fa-print"></i>
                                 Print PDF
                             </button>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             <?php endif; ?>
@@ -59,7 +59,16 @@ if(isset($_GET['end'])){
                 </select>
             </div>
         </div>
-
+        <?php if (isset($alert) && count($alert) > 0): ?>
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle"></i> Pemberitahuan
+                <ul>
+                    <?php foreach($alert as $row): ?>
+                        <li><?= $row ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="table-responsive" style="height:400px; width: 400px; overflow-x: auto; overflow-y: auto;">
             <table class="table table-bordered">
                 <thead>
@@ -84,11 +93,11 @@ if(isset($_GET['end'])){
                                     <tr>
                                         <td><?= $no ?></td>
                                         <?php foreach ($table->title() as $title): ?>
-                                            <?php if($title == 'status'): ?>
+                                            <?php if ($title == 'status'): ?>
                                                 <td> <span class="py-2 px-3 rounded-3
                                                     <?= $value[$title] == 'proses' ? 'bg-warning' : ($value[$title] == 'tertunda' ? 'bg-danger' : 'bg-success')  ?>">
-                                                <?= $value[$title] ?></span></td>
-                                            <?php elseif($title == 'invoice'): ?>
+                                                        <?= $value[$title] ?></span></td>
+                                            <?php elseif ($title == 'invoice'): ?>
                                                 <td>
                                                     <button onclick="invoice(<?= $value['id'] ?>)" class="btn btn-secondary btn-sm">
                                                         <i class="bi bi-file-earmark-text"></i>
@@ -100,7 +109,7 @@ if(isset($_GET['end'])){
                                         <?php endforeach; ?>
                                         <?php if ($table->action()): ?>
                                             <td>
-                                                
+
                                                 <button onclick="<?= $table->clickEdit() ?>(<?= $value['id'] ?>)" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
                                                 <button onclick="deleteData('<?= $table->clickDelete() ?>',<?= $value['id'] ?>)" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Hapus</button>
                                             </td>

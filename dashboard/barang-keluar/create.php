@@ -19,7 +19,6 @@ use App\Repository\FormRepository;
 
 include __DIR__ . '/../../app/repository/formRepository.php';
 
-include_once __DIR__ . '/../../app/controller/JenisSatuanController.php';
 include_once __DIR__ . '/../../app/controller/BarangKeluarController.php';
 include_once __DIR__ . '/../../app/controller/StokController.php';
 

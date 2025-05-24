@@ -15,7 +15,12 @@ class StokBarang extends Model
 
     public function jenisDesc()
     {
-        return $this->relational('jenis_satuans','jenis_id','id');
+        return $this->relational('jenis','jenis_id','id');
+    }
+
+    public function satuanDesc()
+    {
+        return $this->relational('satuans','satuan_id','id');
     }
 
 

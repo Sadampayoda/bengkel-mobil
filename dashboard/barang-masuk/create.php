@@ -1,12 +1,13 @@
 <?php ob_start() ;
 
+use App\Controller\JenisController;
+
 use App\Controller\StokController;
 
 use App\Controller\SupplierController;
 
 use App\Controller\BarangMasukController;
 
-use App\Controller\JenisSatuanController;
 
 $editMode = isset($_GET['id']);
 $id = $_GET['id'] ?? null;
@@ -22,14 +23,14 @@ use App\Repository\FormRepository;
 
 include __DIR__ . '/../../app/repository/formRepository.php';
 include_once __DIR__.'/../../app/controller/BarangMasukController.php';
-include_once __DIR__ . '/../../app/controller/JenisSatuanController.php';
+include_once __DIR__ . '/../../app/controller/JenisController.php';
 include_once __DIR__ . '/../../app/controller/StokController.php';
 include_once __DIR__ .'/../../app/controller/SupplierController.php';
 
 $controller = new BarangMasukController();
 $data = $controller->show($id);
 
-$jenisSatuan = new JenisSatuanController();
+$jenis = new JenisController();
 $barang = new StokController();
 $supplier = new SupplierController();
 // var_dump($jenisSatuan->index('satuan'));
@@ -54,7 +55,7 @@ $input = [
         'name' => 'jenis_id',
         'type' => 'select',
         'id' => 'jenis_id',
-        'data' => $jenisSatuan->index('jenis'),
+        'data' => $jenis->index(),
         'placeholder' => 'Pilih Jenis',
         'required' => true,
         'value' => @$data['jenis_id'],

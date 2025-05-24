@@ -14,7 +14,7 @@ ob_start() ?>
 // var_dump($data->index());
 $title = 'Data Mekanik';
 include __DIR__ . '/../../app/repository/tableRepository.php';
-$table = new TableRepository(['tanggal','name','telepon','active'],$data->index(),'onEditMekanik','onDeleteMekanik');
+$table = new TableRepository(['tanggal','name','telepon'],$data->index(),'onEditMekanik','onDeleteMekanik');
 
 
 $search = '/dashboard/mekanik/';

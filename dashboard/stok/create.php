@@ -1,7 +1,7 @@
 <?php ob_start() ;
 
-use App\Controller\JenisSatuanController;
-
+use App\Controller\SatuanController;
+use App\Controller\JenisController;
 use App\Controller\StokController;
 
 $editMode = isset($_GET['id']);
@@ -18,12 +18,14 @@ use App\Repository\FormRepository;
 
 include __DIR__ . '/../../app/repository/formRepository.php';
 include_once __DIR__.'/../../app/controller/StokController.php';
-include_once __DIR__ . '/../../app/controller/JenisSatuanController.php';
+include_once __DIR__ . '/../../app/controller/JenisController.php';
+include_once __DIR__ . '/../../app/controller/SatuanController.php';
 
 $controller = new StokController();
 $data = $controller->show($id);
 
-$jenisSatuan = new JenisSatuanController();
+$jenis = new JenisController();
+$satuan = new SatuanController();
 // var_dump($jenisSatuan->index('satuan'));
 
 $method = $editMode ? 'PUT' : "POST";
@@ -44,7 +46,7 @@ $input = [
         'name' => 'jenis_id',
         'type' => 'select',
         'id' => 'jenis_id',
-        'data' => $jenisSatuan->index('jenis'),
+        'data' => $jenis->index(),
         'placeholder' => 'Pilih Jenis',
         'required' => true,
         'value' => @$data['jenis_id'],
@@ -54,7 +56,7 @@ $input = [
         'name' => 'satuan_id',
         'type' => 'select',
         'id' => 'satuan_id',
-        'data' => $jenisSatuan->index('satuan'),
+        'data' => $satuan->index(),
         'placeholder' => 'Pilih Satuan',
         'required' => true,
         'value' => @$data['satuan_id'],

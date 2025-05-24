@@ -26,17 +26,22 @@
 
     })
 
+    const onBack = () => {
+        const currentUrl = window.location.href;
+        const newUrl = currentUrl.substring(0, currentUrl.lastIndexOf('/')) + '/';
+        window.location.href = newUrl;
+    }
     const onFilter = () => {
         const date_start = document.getElementById('date_start').value
         const date_end = document.getElementById('date_end').value
-        url = window.location.protocol + '//' + window.location.hostname + window.location.pathname + '?start='+date_start+'&end='+date_end
+        url = window.location.protocol + '//' + window.location.hostname + window.location.pathname + '?start=' + date_start + '&end=' + date_end
         window.location.assign(url.toString());
     }
 
     const onSearch = (path) => {
-        if(!path) return ;
+        if (!path) return;
         const search = document.getElementById('search').value;
-        url = window.location.protocol + '//' + window.location.hostname + '/bengkel-mobil' + path + '?search='+search
+        url = window.location.protocol + '//' + window.location.hostname + '/bengkel-mobil' + path + '?search=' + search
         window.location.assign(url.toString());
     }
 
@@ -45,12 +50,21 @@
         const input = document.querySelectorAll(`#${form} input`);
         const select = document.querySelectorAll(`#${form} select`)
         input.forEach((item) => {
+            if (item.value.trim() == '' && item.required) {
+                data['error'] = true;
+                data['errors'] = data['errors'] || {};
+                data['errors'][`message_${item.name}`] = 'Wajib diisi';
+            }
             data[item.name] = item.value
         })
         select.forEach((item) => {
+            if (item.value.trim() == '' && item.required) {
+                data['error'] = true;
+                data['errors'] = data['errors'] || {};
+                data['errors'][`message_${item.name}`] = 'Wajib diisi';
+            }
             data[item.name] = item.value
         })
-
         return data;
     }
 
@@ -88,7 +102,7 @@
         })
 
     }
-    
+
     function onDeleteOrder(id) {
         url = window.location.protocol + '//' + window.location.hostname
         const data = {
@@ -203,6 +217,7 @@
     }
 
     const fetchDataAndRedirect = (props) => {
+
         const {
             urlFetch,
             method,
@@ -211,12 +226,26 @@
             redirect,
             body = 'toString'
         } = props
+        if (data.error) {
+            Object.entries(data.errors).forEach(([key, value]) => {
+                const error = document.getElementById(key)
+                error.textContent = value
+            });
+            Swal.fire({
+                position: "top",
+                icon: "error",
+                title: `Proses dibatalkan`,
+                showConfirmButton: false,
+                timer: 1500
+            })
+            return;
+        }
         fetch(urlFetch, {
                 method: method,
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: body == 'json' ? JSON.stringify(data)  : new URLSearchParams(data).toString()
+                body: body == 'json' ? JSON.stringify(data) : new URLSearchParams(data).toString()
             })
             .then(response => response.json())
             .then(res => {
@@ -463,6 +492,28 @@
         })
     }
 
+    const formSatuan = (form, method) => {
+        const data = getDataElementAll(form);
+        url = window.location.protocol + '//' + window.location.hostname
+        Swal.fire({
+            title: "Apakah yakin dengan data ini?",
+            showDenyButton: true,
+            showCancelButton: true,
+            confirmButtonText: "Save",
+            denyButtonText: `Don't ssave`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetchDataAndRedirect({
+                    urlFetch: url + `/bengkel-mobil/app/requests/satuan.php`,
+                    method: method,
+                    data: data,
+                    redirect: url + `/bengkel-mobil/dashboard/satuan/`,
+                })
+
+            }
+        })
+    }
+
     const formPelanggan = (form, method) => {
         const data = getDataElementAll(form);
         url = window.location.protocol + '//' + window.location.hostname
@@ -519,7 +570,7 @@
                     method: method,
                     data: data,
                     redirect: url + `/bengkel-mobil/dashboard/order/`,
-                    body:'json',
+                    body: 'json',
                 })
             }
         })
@@ -532,9 +583,8 @@
         Swal.fire({
             title: "Apakah yakin dengan akun ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Simpan Akun",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -542,7 +592,7 @@
                     method: 'POST',
                     data: data,
                     redirect: url + `/bengkel-mobil/auth/login.php`,
-                    body:'json',
+                    body: 'json',
                 })
             }
         })
@@ -554,7 +604,6 @@
         Swal.fire({
             title: "Apakah yakin dengan akun ini?",
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: "Masuk",
             denyButtonText: `Tidak jadi`
         }).then((result) => {
@@ -564,7 +613,7 @@
                     method: 'POST',
                     data: data,
                     redirect: url + `/bengkel-mobil/`,
-                    body:'json',
+                    body: 'json',
                 })
             }
         })
@@ -584,7 +633,7 @@
                     method: 'POST',
                     data: null,
                     redirect: url + `/bengkel-mobil/auth/login.php`,
-                    body:'json',
+                    body: 'json',
                 })
             }
         })
