@@ -19,14 +19,13 @@ class StokController
     public function index()
     {
         if (isset($_GET['search'])) {
-            return $this->model->all('*,stok_barangs.id as id,stok_barangs.name as name ,jenis.name as jenis,satuans.name as satuan')
-                ->with('jenisDesc')
-                ->with('satuanDesc')
+            return $this->model->all('*,stok_barangs.id as id,barangs.name as nama_barang')
+                ->with('barangDesc')
                 ->where('stok_barangs.name', 'LIKE', '%' . $_GET['search'] . '%')->get();
         }
-        return $this->model->all('*,stok_barangs.id as id,stok_barangs.name as name ,jenis.name as jenis, satuans.name as satuan')
-            ->with('satuanDesc')
-            ->with('jenisDesc')->get();
+        return $this->model->all('*,stok_barangs.id as id,barangs.name as nama_barang')
+        ->with('barangDesc')
+        ->get();
     }
 
     public function store($request)
@@ -58,7 +57,8 @@ class StokController
     public function get($id = null)
     {
         if ($id) {
-            $data = $this->model->all()->where('id', '=', $id)->get();
+            $data = $this->model->all('stok_barangs.*,stok_barangs.id as id, stok_barangs.name as name, jenis.id as jenis_id, jenis.name as jenis_name')
+            ->with('jenisDesc')->where('stok_barangs.id', '=', $id)->get();
             return $data[0];
         }
         return $this->model->all()->where('stok', '>', 20)->get();
@@ -68,13 +68,16 @@ class StokController
     {
         $data = $this->index();
         $alert = [];
-        foreach ($data as $item) {
-            if($item['stok'] < 20)
-            {
-                $alert[] = ' Stock Barang '.$item['name'].' akan segera habis ';
+        if(isset($data) && count($data) > 0)
+        {
+            foreach ($data as $item) {
+                if($item['stok'] < 20)
+                {
+                    $alert[] = ' Stock Barang '.$item['name'].' akan segera habis ';
+                }
             }
         }
 
-        return $alert;
+        return $alert ?? null;
     }
 }

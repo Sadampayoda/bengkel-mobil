@@ -18,6 +18,9 @@ class Supplier extends Model
             0 => 'Tidak Aktif'
         ],
     ];
+    protected $columnTimestamps = 'tanggal';
+
+    protected $timestamps = 'Y-m-d';
 
     
 }

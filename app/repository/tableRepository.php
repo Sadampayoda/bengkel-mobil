@@ -6,14 +6,15 @@ include __DIR__.'/../interface/tableInterface.php';
 
 
 class TableRepository implements TableInterface {
-    protected $title,$values,$edit,$delete, $action;
-    public function __construct($title,$value,$edit,$delete,$action=true)
+    protected $title,$values,$edit,$delete, $action,$print;
+    public function __construct($title,$value,$edit,$delete,$action=true,$print='')
     {
         $this->title = $title;
         $this->values = $value;
         $this->edit = $edit;
         $this->delete = $delete;
         $this->action = $action;
+        $this->print = $print;
     }
     public function title()
     {
@@ -61,6 +62,11 @@ class TableRepository implements TableInterface {
     public function action()
     {
         return $this->action;
+    }
+
+    public function print()
+    {
+        return $this->print ?? null;
     }
 
 }

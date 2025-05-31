@@ -18,7 +18,7 @@ class OrderDetail extends Model
 
     public function barangDesc()
     {
-        return $this->relational('stok_barangs','barang_id','id');
+        return $this->relational('barangs','barang_id','id');
     }
 
 }

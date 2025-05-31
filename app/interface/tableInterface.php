@@ -17,4 +17,6 @@ interface TableInterface{
 
     public function action();
 
+    public function print();
+
 }

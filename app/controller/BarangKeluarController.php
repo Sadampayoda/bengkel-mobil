@@ -18,14 +18,20 @@ class BarangKeluarController
 
     public function index()
     {
+        if(isset($_GET['search'])){
+            return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,barangs.name as nama_barang')
+                ->with('barangDesc')
+            ->where('barangs.name', 'like', '%'.$_GET['search'].'%')
+                ->get();
+        }
         if (isset($_GET['start']) || isset($_GET['end'])) {
 
-            return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,stok_barangs.name as barang')
+            return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,barangs.name as nama_barang')
                 ->with('barangDesc')
                 ->whereBetween('barang_keluars.created_at', $_GET['start'], $_GET['end'])
                 ->get();
         }
-        return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,stok_barangs.name as barang')
+        return $this->model->all('*,barang_keluars.id as id,barang_keluars.created_at as tanggal,barangs.name as nama_barang')
             ->with('barangDesc')
             ->get();
     }

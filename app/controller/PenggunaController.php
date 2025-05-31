@@ -1,16 +1,18 @@
 <?php
 
 namespace App\Controller;
-use App\Model\Jenis;
 
-include __DIR__.'/../model/Jenis.php';
+use App\Model\User;
 
-class JenisController {
+include_once __DIR__.'/../model/User.php';
+
+
+class PenggunaController {
 
     protected $model;
     public function __construct()
     {
-        $this->model = new Jenis();
+        $this->model = new User();
     }
     
     public function index()
@@ -18,13 +20,14 @@ class JenisController {
         if(isset($_GET['search']))
         {
             return $this->model->all()
-            ->andWhere('name','LIKE','%'.$_GET['search'].'%')->get();
+            ->where('name','LIKE','%'.$_GET['search'].'%')->get();
         }
         return $this->model->all()->get();
     }
 
     public function store($request)
     {
+        $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
         $jenis = $this->model->create($request);
     }
 
@@ -35,11 +38,17 @@ class JenisController {
             return null;
         }
         $row = $this->model->all()->where('id',' = ',$id)->get();
-        return $row ? $row[0] : null;
+        return $row[0] ?? null;
     }
 
     public function update($request,$id)
     {
+        if(!$request['password'])
+        {
+            unset($request['password']);
+        }else{
+            $request['password'] = password_hash($request['password'], PASSWORD_DEFAULT);
+        }
         $update = $this->model->update($request,['id' => $id]);
         return $update ?? null;
     }
@@ -49,5 +58,4 @@ class JenisController {
         $delete = $this->model->delete('id',$id);
         return $delete ?? null;
     }
-
 }

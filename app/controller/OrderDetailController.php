@@ -35,7 +35,7 @@ class OrderDetailController {
         {
             return null;
         }
-        $row = $this->model->all('*,stok_barangs.name as barang')
+        $row = $this->model->all('*,barangs.name as barang')
         ->with('barangDesc')->where('order_id',' = ',$id)->get();
         return $row ?? null;
     }

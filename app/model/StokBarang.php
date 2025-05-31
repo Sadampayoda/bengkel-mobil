@@ -13,19 +13,9 @@ class StokBarang extends Model
     protected $table = 'stok_barangs';
 
 
-    public function jenisDesc()
+    public function barangDesc()
     {
-        return $this->relational('jenis','jenis_id','id');
+        return $this->relational('barangs','barang_id','id');
     }
-
-    public function satuanDesc()
-    {
-        return $this->relational('satuans','satuan_id','id');
-    }
-
-
-
-    
-    
-    
+        
 }

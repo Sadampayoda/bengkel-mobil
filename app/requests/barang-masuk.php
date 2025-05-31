@@ -35,7 +35,18 @@ if($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
     try {
         parse_str(file_get_contents("php://input"), $putData);
+        $oldData = $barang_masuk->show($putData['id']);
+        $dataStok = $stok->show($putData['barang_id']);
+
         $barang_masuk->update( $putData,$putData['id']);
+
+    
+        $stokNow = $putData['jumlah'] - $oldData['jumlah'];
+
+        $stok->update([
+            'stok' => $dataStok['stok'] + ($stokNow)
+        ],$putData['barang_id']);
+
         echo json_encode(['success' => true, 'message' => 'Data berhasil di ubah','data' => $putData]);
         exit;
     } catch (Exception $e) {
@@ -48,7 +59,13 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
     try {
         parse_str(file_get_contents("php://input"), $data);
+        $dataIn = $barang_masuk->show($data['id']);
+        $dataStok = $stok->show($dataIn['barang_id']);
         $barang_masuk->destroy($data['id']);
+
+        $stok->update([
+            'stok' => $dataStok['stok'] - $dataIn['jumlah']
+        ],$dataIn['barang_id']);
         echo json_encode(['success' => true, 'message' => 'Data berhasil di hapus','data' => $data]);
         exit;
     } catch (Exception $e) {

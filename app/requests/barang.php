@@ -1,18 +1,16 @@
 <?php
 
-use App\Controller\JenisController;
+use App\Controller\BarangController;
 header('Content-Type: application/json');
 
 
+include __DIR__.'/../controller/BarangController.php';
 
-
-include __DIR__.'/../controller/JenisController.php';
-
-$jenis = new JenisController();
+$barang = new BarangController();
 if($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     try {
-        $jenis->store($_POST);
+        $barang->store($_POST);
         echo json_encode(['success' => true, 'message' => 'Data berhasil disimpan','data' => $_POST]);
         exit;
     } catch (Exception $e) {
@@ -26,7 +24,7 @@ if($_SERVER['REQUEST_METHOD'] == 'PUT')
 {
     try {
         parse_str(file_get_contents("php://input"), $putData);
-        $jenis->update( $putData,$putData['id']);
+        $barang->update( $putData,$putData['id']);
         echo json_encode(['success' => true, 'message' => 'Data berhasil di ubah','data' => $putData]);
         exit;
     } catch (Exception $e) {
@@ -39,8 +37,8 @@ if($_SERVER['REQUEST_METHOD'] == 'DELETE')
 {
     try {
         parse_str(file_get_contents("php://input"), $data);
-        $jenis->destroy($data['id']);
-        echo json_encode(['success' => true, 'message' => 'Data berhasil di ubah','data' => $data]);
+        $barang->destroy($data['id']);
+        echo json_encode(['success' => true, 'message' => 'Data berhasil di hapus','data' => $data]);
         exit;
     } catch (Exception $e) {
         echo json_encode(['success' => false, 'message' => $e->getMessage()]);

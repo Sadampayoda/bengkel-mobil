@@ -17,17 +17,7 @@ class BarangMasuk extends Model
     protected $columnTimestamps = 'tanggal';
     public function barangDesc()
     {
-        return $this->relational('stok_barangs','barang_id','id');
-    }
-
-    public function jenisDesc()
-    {
-        return $this->relational('jenis','jenis_id','id');
-    }
-
-    public function supplierDesc()
-    {
-        return $this->relational('suppliers','supplier_id','id');
+        return $this->relational('barangs','barang_id','id');
     }
 
     
