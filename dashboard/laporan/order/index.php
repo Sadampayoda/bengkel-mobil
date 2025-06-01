@@ -17,9 +17,9 @@ ob_start() ?>
 // var_dump($data->index());
 $title = 'Laporan Orderan Servis';
 include __DIR__ . '/../../../app/repository/tableRepository.php';
-$table = new TableRepository(['tanggal','pelanggan','kendaraan','plat_nomer','transmisi','telepon','jasa_servis','total_harga_jasa','total_harga_barang','total_harga_keseluruhan','status','mekanik','invoice'],$data->index(),'onEditOrder','onDeleteOrder',false);
+$table = new TableRepository(['tanggal','pelanggan','kendaraan','plat_nomer','transmisi','telepon','jasa_servis','total_harga_jasa','total_harga_barang','total_harga_keseluruhan','status','mekanik','invoice'],$data->index(),'onEditOrder','onDeleteOrder',false,'onPrintOrder');
 
-
+$print = true;
 
 include __DIR__ . '/../../../components/table.php'
 ?>

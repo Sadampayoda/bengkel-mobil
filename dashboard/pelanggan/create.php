@@ -54,20 +54,9 @@ $input = [
         'label' => 'Aktif',
         'name' => 'active',
         'id' => 'active',
-        'type' => $editMode ? 'select' : 'hidden',
+        'type' => 'hidden',
         'placeholder' => 'Status Pelanggan',
-        'data' => [
-            [
-                'id' => 1,
-                'name' => 'Aktif',
-            ],
-            [
-                'id' => 0,
-                'name' => 'Tidak Aktif',
-            ],
-    
-        ],
-        'value' => $editMode ? (@$data['active'] == 'Aktif' ? 1 : 0) : 1,
+        'value' => 1,
     ],
 ];
 

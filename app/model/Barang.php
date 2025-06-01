@@ -12,6 +12,9 @@ class Barang extends Model
 {
     protected $table = 'barangs';
 
-
+    public function supplierDesc()
+    {
+        return $this->relational('suppliers','supplier_id','id');
+    }
     
 }

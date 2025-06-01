@@ -18,14 +18,20 @@ class StokController
 
     public function index()
     {
+        if (isset($_GET['start']) || isset($_GET['end'])) {
+            return $this->model->all('*,stok_barangs.created_at as tanggal,stok_barangs.id as id,barangs.name as nama_barang')
+                ->with('barangDesc')
+                ->whereBetween('stok_barangs.created_at', $_GET['start'], $_GET['end'])
+                ->get();
+        }
         if (isset($_GET['search'])) {
-            return $this->model->all('*,stok_barangs.id as id,barangs.name as nama_barang')
+            return $this->model->all('*,stok_barangs.created_at as tanggal,stok_barangs.id as id,barangs.name as nama_barang')
                 ->with('barangDesc')
                 ->where('stok_barangs.name', 'LIKE', '%' . $_GET['search'] . '%')->get();
         }
-        return $this->model->all('*,stok_barangs.id as id,barangs.name as nama_barang')
-        ->with('barangDesc')
-        ->get();
+        return $this->model->all('*,stok_barangs.created_at as tanggal, stok_barangs.id as id,barangs.name as nama_barang')
+            ->with('barangDesc')
+            ->get();
     }
 
     public function store($request)
@@ -38,7 +44,8 @@ class StokController
         if (!$id) {
             return null;
         }
-        $row = $this->model->all()->where('id', ' = ', $id)->get();
+        $row = $this->model->all('*,stok_barangs.created_at as tanggal, stok_barangs.id as id,barangs.name as nama_barang')
+        ->where('stok_barangs.id', ' = ', $id)->get();
         return $row[0] ?? null;
     }
 
@@ -58,7 +65,7 @@ class StokController
     {
         if ($id) {
             $data = $this->model->all('stok_barangs.*,stok_barangs.id as id, stok_barangs.name as name, jenis.id as jenis_id, jenis.name as jenis_name')
-            ->with('jenisDesc')->where('stok_barangs.id', '=', $id)->get();
+                ->with('jenisDesc')->where('stok_barangs.id', '=', $id)->get();
             return $data[0];
         }
         return $this->model->all()->where('stok', '>', 20)->get();
@@ -68,12 +75,10 @@ class StokController
     {
         $data = $this->index();
         $alert = [];
-        if(isset($data) && count($data) > 0)
-        {
+        if (isset($data) && count($data) > 0) {
             foreach ($data as $item) {
-                if($item['stok'] < 20)
-                {
-                    $alert[] = ' Stock Barang '.$item['name'].' akan segera habis ';
+                if ($item['stok'] < 20) {
+                    $alert[] = ' Stock Barang ' . $item['name'] . ' akan segera habis ';
                 }
             }
         }

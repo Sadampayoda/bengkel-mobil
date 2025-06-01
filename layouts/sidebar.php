@@ -54,15 +54,9 @@
                     <div class="collapse" id="item">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="<?= BASE_URL ?>/dashboard/jenis/">
-                                    <i class="fas fa-tags me-2"></i>
-                                    <span class="sub-item">Jenis</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="<?= BASE_URL ?>/dashboard/satuan/">
-                                    <i class="fas fa-balance-scale me-2"></i>
-                                    <span class="sub-item">Satuan</span>
+                                <a href="<?= BASE_URL ?>/dashboard/barang/">
+                                    <i class="fas fa-box me-2"></i>
+                                    <span class="sub-item">Barang</span>
                                 </a>
                             </li>
                             <li>
@@ -101,6 +95,8 @@
                     </a>
                 </li>
 
+                
+
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#service">
                         <i class="fas fa-tools"></i>
@@ -108,7 +104,7 @@
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="service">
-                        <ul class="nav nav-collapse">
+                        <ul class="nav nav-collapse service">
                             <li>
                                 <a href="<?= BASE_URL ?>/dashboard/status/">
                                     <i class="fas fa-info-circle me-2"></i>
@@ -140,6 +136,12 @@
                     <div class="collapse" id="laporan">
                         <ul class="nav nav-collapse">
                             <li>
+                                <a href="<?= BASE_URL ?>/dashboard/laporan/stok/">
+                                    <i class="fas fa-warehouse me-2"></i>
+                                    <span class="sub-item">Stok Barang</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="<?= BASE_URL ?>/dashboard/laporan/barang-masuk/">
                                     <i class="fas fa-arrow-circle-down me-2"></i>
                                     <span class="sub-item">Barang Masuk</span>
@@ -165,6 +167,12 @@
                             </li>
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a href="<?= BASE_URL ?>/dashboard/pengguna/" >
+                        <i class="fas fa-person"></i>
+                        <p>Pengguna</p>
+                    </a>
                 </li>
             </ul>
         </div>

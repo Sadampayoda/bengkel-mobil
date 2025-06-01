@@ -35,10 +35,8 @@ $mekanik = new MekanikController();
 $order_detail = new OrderDetailController();
 
 
-// var_dump($jenisSatuan->index('satuan'));
 
 $method = $editMode ? 'PUT' : "POST";
-
 $form = new FormRepository('form-stok', $method, '', 'formOrder', true);
 $input = [
     [
@@ -121,13 +119,14 @@ $input = [
         'id' => 'status',
         'type' => $editMode ? 'select' : 'hidden',
         'placeholder' => 'Pilih Status',
+        'required' => true,
         'data' => [
             [
                 'id' => 'proses',
                 'name' => 'Proses',
             ],
             [
-                'id' => 'tertentu',
+                'id' => 'tertunda',
                 'name' => 'Tertunda',
             ],
             [
@@ -138,7 +137,7 @@ $input = [
         ],
         'value' => $editMode ? @$data['status'] : 'proses',
     ],
-    
+
     [
         'label' => 'Mekanik',
         'name' => 'mekanik_id',
@@ -163,6 +162,21 @@ include __DIR__ . '/../../components/index.php';
 ?>
 
 <script>
+    new TomSelect("#pelanggan_id", {
+        create: true,
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
+
+    new TomSelect("#mekanik_id", {
+        create: true,
+        sortField: {
+            field: "text",
+            direction: "asc"
+        }
+    });
     const dataBarangLama = <?php echo json_encode($order_detail->show($id)); ?>;
 
     document.addEventListener('DOMContentLoaded', function() {

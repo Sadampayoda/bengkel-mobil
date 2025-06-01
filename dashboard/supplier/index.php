@@ -14,7 +14,7 @@ ob_start() ?>
 // var_dump($data->index());
 $title = 'Data Supplier';
 include __DIR__ . '/../../app/repository/tableRepository.php';
-$table = new TableRepository(['name','alamat','telepon','active'],$data->index(),'onEditSupplier','onDeleteSupplier');
+$table = new TableRepository(['tanggal','name','alamat','telepon','active'],$data->index(),'onEditSupplier','onDeleteSupplier');
 
 
 $search = '/dashboard/supplier/';

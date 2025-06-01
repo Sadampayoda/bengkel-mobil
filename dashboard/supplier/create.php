@@ -55,6 +55,7 @@ $input = [
         'id' => 'active',
         'type' => $editMode ? 'select' : 'hidden',
         'placeholder' => 'Status Supplier',
+        'required' => true,
         'data' => [
             [
                 'id' => 1,

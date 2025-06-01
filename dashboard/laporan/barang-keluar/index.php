@@ -15,7 +15,7 @@ ob_start() ?>
 // var_dump($data->index());
 $title = 'Laporan Barang Keluar';
 include __DIR__ . '/../../../app/repository/tableRepository.php';
-$table = new TableRepository(['tanggal','barang','penerima','jumlah'],$data->index(),'onEditBarangKeluar','onDeleteBarangKeluar',false);
+$table = new TableRepository(['tanggal','nama_barang','penerima','jumlah'],$data->index(),'onEditBarangKeluar','onDeleteBarangKeluar',false,'onPrintBarangKeluar');
 
 $search = '/dashboard/laporan/barang-keluar';
 

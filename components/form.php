@@ -7,13 +7,13 @@
             <?php $form ?? '' ?>
             <div class="row">
                 <?php foreach ($input as $row): ?>
-                    <div class="mb-3 col-md-6">
-                        <?php
-                        $row['type'] = $row['type'] ?? 'text';
-                        if ($row['type'] !== 'hidden'): ?>
+                    <?php
+                    $row['type'] = $row['type'] ?? 'text';
+                    if ($row['type'] !== 'hidden'): ?>
+                        <div class="mb-3 col-md-6">
                             <?php if ($row['type'] == 'select'): ?>
                                 <label class="form-label" for="<?= $row['name'] ?? 'name' ?>"><?= $row['label'] ?? '' ?></label>
-                                <select <?= $row['required'] ? 'required' : null ?> class="form-select bg-light py-2" name="<?= $row['name'] ?? 'name' ?>" id="<?= $row['id'] ?? $row['name'] ?>">
+                                <select <?= $row['required'] ? 'required' : '' ?> class="form-select bg-light py-2" name="<?= $row['name'] ?? 'name' ?>" id="<?= $row['id'] ?? $row['name'] ?>">
                                     <option value=""><?= $row['placeholder'] ?? 'Pilih' ?></option>
                                     <?php foreach ($row['data'] as $rows): ?>
                                         <option
@@ -22,7 +22,6 @@
                                     <?php endforeach; ?>
                                 </select>
                             <?php else: ?>
-                                <!-- <?= var_dump($row) ?> -->
                                 <label for="<?= $row['name'] ?? 'name' ?>" class="form-label"><?= $row['label'] ?? '' ?></label>
                                 <input
                                     type="<?= $row['type'] ?? 'text' ?>"
@@ -33,19 +32,19 @@
                                     class="form-control bg-light"
                                     value="<?= $row['value'] ?? null ?>" <?= isset($row['readonly']) ? 'readonly' : null ?>>
                             <?php endif; ?>
-                            <div >
+                            <div>
                                 <p id="message_<?= $row['name'] ?>" class="text-muted text-danger">
 
                                 </p>
                             </div>
-                        <?php else: ?>
-                            <input
-                                type="hidden"
-                                name="<?= $row['name'] ?>"
-                                id="<?= $row['id'] ?? $row['name'] ?? '' ?>"
-                                value="<?= $row['value'] ?? null ?>">
-                        <?php endif; ?>
-                    </div>
+                        </div>
+                    <?php else: ?>
+                        <input
+                            type="hidden"
+                            name="<?= $row['name'] ?>"
+                            id="<?= $row['id'] ?? $row['name'] ?? '' ?>"
+                            value="<?= $row['value'] ?? null ?>">
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
             <?php if ($form->detail()): ?>
@@ -76,7 +75,7 @@
                 <div class="row">
                     <div class="col-6">
                         <label class="form-label" for="total_harga_barang">Total Harga Barang</label>
-                        <input type="number" name="total_harga_barang" id="total_harga_barang" placeholder="Total Harga Barang" class="form-control" readonly >
+                        <input type="number" name="total_harga_barang" id="total_harga_barang" placeholder="Total Harga Barang" class="form-control" readonly>
                     </div>
                 </div>
             <?php endif; ?>

@@ -14,7 +14,7 @@ ob_start() ?>
 // var_dump($data->index());
 $title = 'Laporan Supplier';
 include __DIR__ . '/../../../app/repository/tableRepository.php';
-$table = new TableRepository(['name','alamat','telepon'],$data->index(),'onEditSupplier','onDeleteSupplier',false);
+$table = new TableRepository(['name','alamat','telepon'],$data->index(),'onEditSupplier','onDeleteSupplier',false,'onPrintSupplier');
 
 
 

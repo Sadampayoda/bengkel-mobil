@@ -77,9 +77,6 @@ include __DIR__ . '/../app/config/app.php';
                                     Masuk
                                 </button>
                             </div>
-                            <div class="mb-3 p-4 border-top text-center">
-                                <p>Tidak punya akun? Registrasi <a href="<?= BASE_URL ?>/auth/register.php">Disini</a> </p>
-                            </div>
                         </div>
                     </div>
                 </form>

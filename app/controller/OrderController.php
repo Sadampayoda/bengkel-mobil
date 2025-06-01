@@ -4,17 +4,20 @@ namespace App\Controller;
 
 
 use App\Model\Order;
+use App\Model\OrderDetail;
 
 include_once __DIR__ . '/../model/Order.php';
+include_once __DIR__ . '/../model/OrderDetail.php';
 
 
 class OrderController
 {
 
-    protected $model;
+    protected $model, $orderDetail;
     public function __construct()
     {
         $this->model = new Order();
+        $this->orderDetail = new OrderDetail();
     }
 
     public function index()
@@ -82,5 +85,11 @@ class OrderController
             ->get();
 
         return $data[0] ?? null;
+    }
+
+    public function orderDetailFirst($id)
+    {
+        return $this->orderDetail->all('*,order_details.id as id, barangs.name as nama_barang')
+        ->with('barangDesc')->where('order_id',' = ',$id)->get()[0];
     }
 }

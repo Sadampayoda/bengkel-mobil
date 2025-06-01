@@ -19,14 +19,16 @@ class BarangController
     {
     
         if (isset($_GET['search'])) {
-            return $this->model->all()
-                ->where('name', 'like', '%'.$_GET['search'].'%')
+            return $this->model->all('*,barangs.id as id,barangs.name as name, suppliers.name as nama_supplier')
+                ->with('supplierDesc')
+                ->where('barangs.name', 'like', '%'.$_GET['search'].'%')
                 ->get();
 
         }
 
 
-        return $this->model->all()
+        return $this->model->all('*,barangs.id as id,barangs.name as name, suppliers.name as nama_supplier')
+            ->with('supplierDesc')
             ->get();
     }
 
@@ -40,8 +42,9 @@ class BarangController
         if (!$id) {
             return null;
         }
-        $row = $this->model->all()
-            ->where('id', ' = ', $id)
+        $row = $this->model->all('*,barangs.id as id,barangs.name as name, suppliers.name as nama_supplier')
+            ->with('supplierDesc')
+            ->where('barangs.id', ' = ', $id)
             ->get();
         return $row[0] ?? null;
     }

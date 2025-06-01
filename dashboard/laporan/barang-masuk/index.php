@@ -15,7 +15,7 @@ ob_start() ?>
 
 $title = 'Laporan Barang Masuk';
 include __DIR__ . '/../../../app/repository/tableRepository.php';
-$table = new TableRepository(['tanggal','barang','jenis','supplier','jumlah'],$data->index(),'onEditBarangMasuk','onDeleteBarangMasuk',false);
+$table = new TableRepository(['tanggal','nama_barang','jenis','satuan','jumlah'],$data->index(),'onEditBarangMasuk','onDeleteBarangMasuk',false,'onPrintBarangMasuk');
 
 $search = '/dashboard/laporan/barang-masuk/';
 

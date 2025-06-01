@@ -15,7 +15,7 @@ ob_start() ?>
 // var_dump($data->index());
 $title = 'Barang Masuk';
 include __DIR__ . '/../../app/repository/tableRepository.php';
-$table = new TableRepository(['tanggal','barang','jenis','supplier','jumlah'],$data->index(),'onEditBarangMasuk','onDeleteBarangMasuk');
+$table = new TableRepository(['tanggal','nama_barang','jumlah'],$data->index(),'onEditBarangMasuk','onDeleteBarangMasuk');
 
 
 

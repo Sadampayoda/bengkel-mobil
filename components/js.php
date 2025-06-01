@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function() {
+
         $('#entry').on('change', function() {
             const value = $(this).val();
             const url = new URL(window.location.href);
@@ -25,6 +26,16 @@
 
 
     })
+    document.addEventListener("DOMContentLoaded", function () {
+        var dropdowns = document.querySelectorAll('.collapse');
+
+        dropdowns.forEach(function(dropdown) {
+            dropdown.addEventListener('hidden.bs.collapse', function () {
+                
+                location.reload();
+            });
+        });
+    });
 
     const onBack = () => {
         const currentUrl = window.location.href;
@@ -72,7 +83,6 @@
         Swal.fire({
             title: "Apakah yakin menghapus data ini?",
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: "Yakin",
             denyButtonText: `Tidak jadi`
         }).then((result) => {
@@ -83,7 +93,7 @@
                     console.error(`Function "${eventName}" tidak ditemukan.`);
                 }
             } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
+                Swal.fire("Tidak jadi dihapus", "", "info");
             }
         })
     }
@@ -99,6 +109,21 @@
             method: 'DELETE',
             data: data,
             redirect: `${url}/bengkel-mobil/dashboard/jenis/`
+        })
+
+    }
+
+    function onDeletePengguna(id) {
+        url = window.location.protocol + '//' + window.location.hostname
+        const data = {
+            id: id
+        }
+        const fetch = `${url}/bengkel-mobil/app/requests/pengguna.php`
+        fetchDataAndRedirect({
+            urlFetch: fetch,
+            method: 'DELETE',
+            data: data,
+            redirect: `${url}/bengkel-mobil/dashboard/pengguna/`
         })
 
     }
@@ -123,7 +148,7 @@
         const data = {
             id: id
         }
-        const fetch = `${url}/bengkel-mobil/app/requests/jenis.php`
+        const fetch = `${url}/bengkel-mobil/app/requests/satuan.php`
         fetchDataAndRedirect({
             urlFetch: fetch,
             method: 'DELETE',
@@ -201,6 +226,20 @@
             redirect: `${url}/bengkel-mobil/dashboard/mekanik/`
         })
     }
+    
+    function onDeleteBarang(id) {
+        url = window.location.protocol + '//' + window.location.hostname
+        const data = {
+            id: id
+        }
+        const fetch = `${url}/bengkel-mobil/app/requests/barang.php`
+        fetchDataAndRedirect({
+            urlFetch: fetch,
+            method: 'DELETE',
+            data: data,
+            redirect: `${url}/bengkel-mobil/dashboard/barang/`
+        })
+    }
 
     function onDeletePelanggan(id) {
         url = window.location.protocol + '//' + window.location.hostname
@@ -222,23 +261,27 @@
             urlFetch,
             method,
             data,
+            noData = false,
             notif = 'info',
             redirect,
             body = 'toString'
         } = props
-        if (data.error) {
-            Object.entries(data.errors).forEach(([key, value]) => {
-                const error = document.getElementById(key)
-                error.textContent = value
-            });
-            Swal.fire({
-                position: "top",
-                icon: "error",
-                title: `Proses dibatalkan`,
-                showConfirmButton: false,
-                timer: 1500
-            })
-            return;
+
+        if (!noData) {
+            if (data?.error) {
+                Object.entries(data.errors).forEach(([key, value]) => {
+                    const error = document.getElementById(key)
+                    error.textContent = value
+                });
+                Swal.fire({
+                    position: "top",
+                    icon: "error",
+                    title: `Proses dibatalkan`,
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                return;
+            }
         }
         fetch(urlFetch, {
                 method: method,
@@ -274,6 +317,57 @@
             })
     }
 
+    const onPrintBarangMasuk = (type = null) => {
+        if(type){
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/exports/barang-masuk.php`;
+
+        }else{
+
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/requests/print/barang-masuk.php`;
+        }
+        window.location.assign(url);
+    }
+    const onPrintStok = (type = null) => {
+        if(type){
+
+            url = window.location.protocol + '//' + window.location.hostname +  `/bengkel-mobil/app/exports/stok.php`;
+        }else{
+
+            url = window.location.protocol + '//' + window.location.hostname +  `/bengkel-mobil/app/requests/print/stok.php`;
+        }
+        window.location.assign(url);
+    }
+    const onPrintBarangKeluar = (type = null) => {
+        if(type){
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/exports/barang-keluar.php`;
+        }else{
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/requests/print/barang-keluar.php`;
+
+        }
+        window.location.assign(url);
+    }
+    const onPrintSupplier = (type = null) => {
+        if(type){
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/exports/supplier.php`;
+
+        }else{
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/requests/print/supplier.php`;
+
+        }
+        window.location.assign(url);
+    }
+    
+    const onPrintOrder = (type = null) => {
+        if(type){
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/exports/order.php`;
+        }else{
+            url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/app/requests/print/order.php`;
+    
+        }
+        window.location.assign(url);
+        
+    }
+
 
 
     const paginate = (page = 1) => {
@@ -307,9 +401,8 @@
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetch(`${url}/bengkel-mobil/app/requests/jenis.php`, {
@@ -335,7 +428,7 @@
                     })
 
             } else if (result.isDenied) {
-                Swal.fire("Changes are not saved", "", "info");
+                Swal.fire("Changes are not Yakind", "", "info");
             }
         });
     }
@@ -369,12 +462,21 @@
         window.location.assign(url);
     }
 
+    const onEditBarang = (id) => {
+        url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/dashboard/barang/create.php?id=${id}`;
+        window.location.assign(url);
+    }
+
     const onEditPelanggan = (id) => {
         url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/dashboard/pelanggan/create.php?id=${id}`;
         window.location.assign(url);
     }
     const onEditOrder = (id) => {
         url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/dashboard/order/create.php?id=${id}`;
+        window.location.assign(url);
+    }
+    const onEditPengguna = (id) => {
+        url = window.location.protocol + '//' + window.location.hostname + `/bengkel-mobil/dashboard/pengguna/create.php?id=${id}`;
         window.location.assign(url);
     }
     const invoice = (id) => {
@@ -384,13 +486,16 @@
 
     const formStok = (form, method) => {
         const data = getDataElementAll(form);
+        delete data.kode
+        delete data.jenis
+        delete data.satuan
+        delete data.harga
         url = window.location.protocol + '//' + window.location.hostname
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -410,9 +515,8 @@
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -426,15 +530,39 @@
         })
     }
 
-    const formBarangMasuk = (form, method) => {
+    const formBarang = (form, method) => {
         const data = getDataElementAll(form);
         url = window.location.protocol + '//' + window.location.hostname
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetchDataAndRedirect({
+                    urlFetch: url + `/bengkel-mobil/app/requests/barang.php`,
+                    method: method,
+                    data: data,
+                    redirect: url + `/bengkel-mobil/dashboard/barang/`,
+                })
+
+            }
+        })
+    }
+
+    const formBarangMasuk = (form, method) => {
+        const data = getDataElementAll(form);
+        delete data.kode
+        delete data.jenis
+        delete data.satuan
+        delete data.harga
+        url = window.location.protocol + '//' + window.location.hostname
+        Swal.fire({
+            title: "Apakah yakin dengan data ini?",
+            showDenyButton: true,
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -450,13 +578,16 @@
 
     const formBarangKeluar = (form, method) => {
         const data = getDataElementAll(form);
+        delete data.kode
+        delete data.jenis
+        delete data.satuan
+        delete data.harga
         url = window.location.protocol + '//' + window.location.hostname
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -476,9 +607,8 @@
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -498,9 +628,8 @@
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -520,9 +649,8 @@
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -538,6 +666,11 @@
 
     const formOrder = (form, method) => {
         const data = getDataElementAll(form);
+
+        if (data.status === "tertunda") {
+            data.status = 'tertentu';
+        }
+
 
         const tbody = document.querySelector('#detail tbody');
         const rows = tbody.querySelectorAll('tr');
@@ -560,9 +693,8 @@
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
             showDenyButton: true,
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            denyButtonText: `Don't ssave`
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
         }).then((result) => {
             if (result.isConfirmed) {
                 fetchDataAndRedirect({
@@ -620,10 +752,10 @@
     }
     const onLogout = () => {
         url = window.location.protocol + '//' + window.location.hostname
+
         Swal.fire({
             title: "Apakah yakin keluar dari akun ini?",
             showDenyButton: true,
-            showCancelButton: true,
             confirmButtonText: "Betul",
             denyButtonText: `Tidak jadi`
         }).then((result) => {
@@ -634,8 +766,31 @@
                     data: null,
                     redirect: url + `/bengkel-mobil/auth/login.php`,
                     body: 'json',
+                    noData: false,
                 })
             }
         })
     }
+
+    const formPengguna = (form, method) => {
+        const data = getDataElementAll(form);
+        url = window.location.protocol + '//' + window.location.hostname
+        Swal.fire({
+            title: "Apakah yakin dengan data ini?",
+            showDenyButton: true,
+            confirmButtonText: "Yakin",
+            denyButtonText: `Tidak Jadi`
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetchDataAndRedirect({
+                    urlFetch: url + `/bengkel-mobil/app/requests/pengguna.php`,
+                    method: method,
+                    data: data,
+                    redirect: url + `/bengkel-mobil/dashboard/pengguna/`,
+                })
+
+            }
+        })
+    }
+
 </script>

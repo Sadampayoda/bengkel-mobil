@@ -62,7 +62,7 @@
                                 <div class="input-group">
                                     <input
                                         type="text"
-                                        placeholder="Search ..."
+                                        placeholder="Cari ..."
                                         class="form-control" />
                                 </div>
                             </form>

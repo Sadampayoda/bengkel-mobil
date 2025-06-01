@@ -48,7 +48,7 @@ include __DIR__ . '/../app/config/session.php';
     <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.3/dist/js/tom-select.complete.min.js"></script>
     <style>
         ::-webkit-scrollbar {
-            width: 1px;
+            width: 10px;
         }
     </style>
 </head>
@@ -65,10 +65,8 @@ include __DIR__ . '/../app/config/session.php';
     </div>
 
     <?php include __DIR__ . '/../components/js.php' ?>
-    <script src="<?= BASE_URL ?>/js/core/jquery-3.7.1.min.js">
-        < /> <
-        script src = "<?= BASE_URL ?>/js/core/popper.min.js" >
-    </script>
+    <script src="<?= BASE_URL ?>/js/core/jquery-3.7.1.min.js"></script> 
+    <script src = "<?= BASE_URL ?>/js/core/popper.min.js" ></script>
     <script src="<?= BASE_URL ?>/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->

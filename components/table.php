@@ -24,27 +24,40 @@ if (isset($_GET['end'])) {
             <?php else: ?>
                 <div class="col-8">
                     <div class="row">
-                        <div class="col-3">
+                        <div class="col-2">
                             <label for="date_start" class="form-label">Tanggal Mulai</label>
-                            <input type="date" name="date_start" id="date_start" max="<?= $end ?>" class="form-control" value="<?= $start ?>">
+                            <input type="date" name="date_start" id="date_start" max="<?= $end ?>"
+                                class="form-control form-control-sm" value="<?= $start ?>">
                         </div>
-                        <div class="col-3">
+                        <div class="col-2">
                             <label for="date_end" class="form-label">Tanggal Akhir</label>
-                            <input type="date" name="date_end" min="<?= $start ?>" id="date_end" class="form-control" value="<?= $end ?>">
+                            <input type="date" name="date_end" min="<?= $start ?>" id="date_end"
+                                class="form-control form-control-sm" value="<?= $end ?>">
 
                         </div>
-                        <div class="col-3 ">
-                            <button id="filter" onclick="onFilter()" class="btn btn-success" style="margin-top: 30px;">
+
+                        <div class="col-7 mt-3">
+                            <button id="filter" onclick="onFilter()" class="btn btn-success btn-sm"
+                                style="margin-top: 30px;">
                                 <i class="fas fa-filter"></i>
                                 Filter
                             </button>
+                            <?php if ($table->print()): ?>
+                                <?php if (!isset($print)): ?>
+                                    <button onclick="<?= $table->print(); ?>()" class="btn btn-success btn-sm"
+                                        style="margin-top: 30px;">
+                                        <i class="fas fa-print"></i>
+                                        Print PDF
+                                    </button>
+                                <?php endif; ?>
+                                <button onclick="<?= $table->print(); ?>('export')" class="btn btn-success btn-sm"
+                                    style="margin-top: 30px;">
+                                    <i class="fas fa-excel"></i>
+                                    Export
+                                </button>
+                            <?php endif; ?>
                         </div>
-                        <!-- <div class="col-3">
-                            <button id="print" class="btn btn-success" style="margin-top: 30px;">
-                                <i class="fas fa-print"></i>
-                                Print PDF
-                            </button>
-                        </div> -->
+
                     </div>
                 </div>
             <?php endif; ?>
@@ -63,20 +76,20 @@ if (isset($_GET['end'])) {
             <div class="alert alert-danger">
                 <i class="fas fa-exclamation-circle"></i> Pemberitahuan
                 <ul>
-                    <?php foreach($alert as $row): ?>
+                    <?php foreach ($alert as $row): ?>
                         <li><?= $row ?></li>
                     <?php endforeach; ?>
                 </ul>
             </div>
         <?php endif; ?>
         <div class="table-responsive" style="height:400px; width: 400px; overflow-x: auto; overflow-y: auto;">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="min-width: max-content; ">
                 <thead>
                     <tr>
                         <th>NO</th>
                         <?php foreach ($table->title() as $title): ?>
                             <th class="py-5 px-10 font-bold text-lg ">
-                                <?= str_replace("_", " ", strtoupper($title));  ?>
+                                <?= str_replace("_", " ", strtoupper($title)); ?>
                             </th>
                         <?php endforeach; ?>
                         <?php if ($table->action()): ?>
@@ -94,8 +107,9 @@ if (isset($_GET['end'])) {
                                         <td><?= $no ?></td>
                                         <?php foreach ($table->title() as $title): ?>
                                             <?php if ($title == 'status'): ?>
-                                                <td> <span class="py-2 px-3 rounded-3
-                                                    <?= $value[$title] == 'proses' ? 'bg-warning' : ($value[$title] == 'tertunda' ? 'bg-danger' : 'bg-success')  ?>">
+                                                <td> <span
+                                                        class="py-2 px-3 rounded-3
+                                                    <?= $value[$title] == 'proses' ? 'bg-warning' : ($value[$title] == 'tertunda' ? 'bg-danger' : 'bg-success') ?>">
                                                         <?= $value[$title] ?></span></td>
                                             <?php elseif ($title == 'invoice'): ?>
                                                 <td>
@@ -109,9 +123,10 @@ if (isset($_GET['end'])) {
                                         <?php endforeach; ?>
                                         <?php if ($table->action()): ?>
                                             <td>
-
-                                                <button onclick="<?= $table->clickEdit() ?>(<?= $value['id'] ?>)" class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Edit</button>
-                                                <button onclick="deleteData('<?= $table->clickDelete() ?>',<?= $value['id'] ?>)" class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Hapus</button>
+                                                <button onclick="<?= $table->clickEdit() ?>(<?= $value['id'] ?>)"
+                                                    class="btn btn-warning btn-sm"><i class="bi bi-pencil"></i> Ubah</button>
+                                                <button onclick="deleteData('<?= $table->clickDelete() ?>',<?= $value['id'] ?>)"
+                                                    class="btn btn-danger btn-sm"><i class="bi bi-trash3"></i> Hapus</button>
                                             </td>
                                         <?php endif; ?>
                                     </tr>
@@ -131,24 +146,19 @@ if (isset($_GET['end'])) {
         <div class="d-flex justify-content-end align-items-center px-5 mt-1 gap-2">
             <p class="fs-5 p-3 mt-1 mb-0"><?= $table->paginate()['summary'] ?></p>
             <div class="btn-group me-5 p-3" role="group" aria-label="Pagination">
-                <button type="button"
-                    class="btn btn-outline-primary"
-                    onclick="paginate(<?= $table->paginate()['page'] - 1 ?>)"
-                    <?= $table->paginate()['prev'] ? 'disabled' : '' ?>>
+                <button type="button" class="btn btn-outline-primary"
+                    onclick="paginate(<?= $table->paginate()['page'] - 1 ?>)" <?= $table->paginate()['prev'] ? 'disabled' : '' ?>>
                     <i class="fa-solid fa-chevron-left"></i>
                 </button>
-                <?php for ($i = 0; $i < $table->paginate()['count']; $i++) : ?>
+                <?php for ($i = 0; $i < $table->paginate()['count']; $i++): ?>
                     <?php $isActive = $table->paginate()['page'] == ($i + 1); ?>
-                    <button type="button"
-                        class="btn <?= $isActive ? 'btn-primary' : 'btn-outline-primary' ?>"
+                    <button type="button" class="btn <?= $isActive ? 'btn-primary' : 'btn-outline-primary' ?>"
                         onclick="paginate(<?= $i + 1 ?>)">
                         <?= $i + 1 ?>
                     </button>
                 <?php endfor; ?>
-                <button type="button"
-                    class="btn btn-outline-primary"
-                    onclick="paginate(<?= $table->paginate()['page'] + 1 ?>)"
-                    <?= $table->paginate()['next'] ? 'disabled' : '' ?>>
+                <button type="button" class="btn btn-outline-primary"
+                    onclick="paginate(<?= $table->paginate()['page'] + 1 ?>)" <?= $table->paginate()['next'] ? 'disabled' : '' ?>>
                     <i class="fa-solid fa-chevron-right"></i>
                 </button>
             </div>

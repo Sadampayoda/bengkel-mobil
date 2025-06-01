@@ -16,7 +16,7 @@ $search = '/dashboard/stok/';
 // var_dump($data->index());
 $title = 'Stok Barang';
 include __DIR__ . '/../../app/repository/tableRepository.php';
-$table = new TableRepository(['name','jenis','satuan','harga','stok'],$data->index(),'onEditStok','onDeleteStok');
+$table = new TableRepository(['nama_barang','stok'],$data->index(),'onEditStok','onDeleteStok');
 
 $alert = $data->stok();
 
