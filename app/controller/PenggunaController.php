@@ -20,7 +20,8 @@ class PenggunaController {
         if(isset($_GET['search']))
         {
             return $this->model->all()
-            ->where('name','LIKE','%'.$_GET['search'].'%')->get();
+            ->search(['name','email'],$_GET['search'])
+            ->get();
         }
         return $this->model->all()->get();
     }

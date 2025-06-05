@@ -20,7 +20,7 @@ class PelangganController {
         if(isset($_GET['search']))
         {
             return $this->model->all()
-            ->where('name','LIKE','%'.$_GET['search'].'%')->get();
+            ->search(['name','alamat','telepon'],$_GET['search'])->get();
         }
         return $this->model->all()->get();
     }

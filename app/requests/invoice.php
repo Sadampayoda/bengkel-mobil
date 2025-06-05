@@ -12,8 +12,11 @@ if ($_GET['id']) {
     $order_detail = new OrderDetailController();
 
     $data = $order->print($_GET['id']);
-    $data['barang'] = $order_detail->show($_GET['id']);
-    $img = __DIR__.'/../../assets/logo.png';
+    $barang = $order_detail->show($_GET['id']);
+    $data['barang'] = $barang ? $barang : [];
+
+    $img = __DIR__ . '/../../assets/logo.png';
+
     $html = '
 <html>
 <head>
@@ -91,7 +94,7 @@ if ($_GET['id']) {
 </head>
 <body>
     <div class="header">
-        <img src="'.$img.'" style="width: 100%; height: auto;" />
+        <img src="' . $img . '" style="width: 100%; height: auto;" />
     </div>
 
     <hr>
@@ -99,40 +102,38 @@ if ($_GET['id']) {
     <div class="invoice-title">INVOICE</div>
 
     <table border="1" class="invoice-table">
-        <tr>
-            <td colspan="2"><strong>Tanggal:</strong> ' . date('d F Y', strtotime($data["tanggal"])) . '</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Nama Pelanggan:</strong> ' . $data["pelanggan"] . '</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Kendaraan:</strong> ' . $data["kendaraan"] . '</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Plat Nomor:</strong> ' . $data["plat_nomer"] . '</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Transmisi:</strong> ' . $data["transmisi"] . '</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>No Telepon:</strong> ' . $data["telepon"] . '</td>
-        </tr>
-        <tr>
-            <td colspan="2"><strong>Jasa Servis:</strong> ' . $data["jasa_servis"] . '</td>
-        </tr>
-            <tr>
-                <td>Nama Barang</td>
-            </tr>
-        ';
-    foreach ($data['barang'] as $b) {
+        <tr><td colspan="2"><strong>Tanggal:</strong> ' . date('d F Y', strtotime($data["tanggal"])) . '</td></tr>
+        <tr><td colspan="2"><strong>Nama Pelanggan:</strong> ' . $data["pelanggan"] . '</td></tr>
+        <tr><td colspan="2"><strong>Kendaraan:</strong> ' . $data["kendaraan"] . '</td></tr>
+        <tr><td colspan="2"><strong>Plat Nomor:</strong> ' . $data["plat_nomer"] . '</td></tr>
+        <tr><td colspan="2"><strong>Transmisi:</strong> ' . $data["transmisi"] . '</td></tr>
+        <tr><td colspan="2"><strong>No Telepon:</strong> ' . $data["telepon"] . '</td></tr>
+        <tr><td colspan="2"><strong>Jasa Servis:</strong> ' . $data["jasa_servis"] . '</td></tr>
+    </table>';
+
+    if (!empty($data['barang'])) {
         $html .= '
-            
-                <td>' . $b['barang'] . ' - ' . $b['jumlah'] . ' Pcs</td>
-            </table>';
+        <table class="item-table">
+            <thead>
+                <tr>
+                    <th>Nama Barang</th>
+                    <th>Jumlah</th>
+                </tr>
+            </thead>
+            <tbody>';
+        foreach ($data['barang'] as $b) {
+            $html .= '
+                <tr>
+                    <td>' . $b['barang'] . '</td>
+                    <td>' . $b['jumlah'] . ' Pcs</td>
+                </tr>';
+        }
+        $html .= '
+            </tbody>
+        </table>';
     }
+
     $html .= '
-
-
     <table class="total-table">
         <tr>
             <td class="total-label"><strong>Total Harga Jasa:</strong> Rp ' . number_format($data["total_harga_jasa"], 0, ',', '.') . '</td>

@@ -37,7 +37,7 @@
                         </div>
                         <input
                             type="text"
-                            placeholder="Search ..."
+                            placeholder="Cari ..."
                             class="form-control"
                             id="search" 
                             value="<?= $_GET['search'] ?? ''?>"

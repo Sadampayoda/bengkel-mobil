@@ -14,9 +14,15 @@ $order = $data->index();
 $i = 0;
 foreach ($order as $row) {
     $order_detail = $data->orderDetailFirst($row['id']);
-    $order[$i]['nama_barang'] = $order_detail['nama_barang'];
-    $suppliers = $supplier->show($order_detail['supplier_id']);
-    $order[$i]['supplier'] = $suppliers['name'];
+    if($order_detail) {
+        $order[$i]['nama_barang'] = $order_detail['nama_barang'];
+        $suppliers = $supplier->show($order_detail['supplier_id']);
+        $order[$i]['supplier'] = $suppliers['name'];
+    }else{
+        $order[$i]['nama_barang'] = ' - ';
+        $order[$i]['supplier'] = ' - ';
+    }
+    $i++;
 }
 
 
@@ -26,7 +32,6 @@ ob_start() ?>
 
 <?php
 
-// var_dump($data->index());
 $title = 'Order Servis';
 include __DIR__ . '/../../app/repository/tableRepository.php';
 $table = new TableRepository(['tanggal','nama_barang','supplier','pelanggan', 'kendaraan', 'plat_nomer', 'transmisi', 'telepon', 'jasa_servis', 'total_harga_jasa', 'total_harga_barang', 'total_harga_keseluruhan', 'status', 'mekanik'], $order, 'onEditOrder', 'onDeleteOrder');

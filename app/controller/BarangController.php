@@ -21,7 +21,13 @@ class BarangController
         if (isset($_GET['search'])) {
             return $this->model->all('*,barangs.id as id,barangs.name as name, suppliers.name as nama_supplier')
                 ->with('supplierDesc')
-                ->where('barangs.name', 'like', '%'.$_GET['search'].'%')
+                ->search([
+                    'barangs.kode', 
+                    'barangs.name',
+                    'jenis','satuan',
+                    'harga',
+                    'suppliers.name',
+                ],$_GET['search'])
                 ->get();
 
         }

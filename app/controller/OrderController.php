@@ -23,13 +23,25 @@ class OrderController
     public function index()
     {
         if (isset($_GET['search'])) {
-            $this->model->all(
+            $search = $this->model->all(
                 '*,orders.id as id ,orders.created_at as tanggal,pelanggans.name as pelanggan,mekaniks.name as mekanik'
             )
                 ->with('pelangganDesc')
                 ->with('mekanikDesc')
-                ->where('name', 'LIKE', '%' . $_GET['search'] . '%')->get()
+                ->search([
+                    'pelanggans.name',
+                    'orders.kendaraan',
+                    'orders.plat_nomer',
+                    'orders.transmisi',
+                    'orders.telepon',
+                    'orders.jasa_servis',
+                    'orders.total_harga_jasa',
+                    'orders.total_harga_barang',
+                    'orders.total_harga_keseluruhan',
+                    'orders.status',
+                ],$_GET['search'])
                 ->get();
+            return $search ?? [];
         }
         if (isset($_GET['start']) || isset($_GET['end'])) {
 
@@ -89,7 +101,10 @@ class OrderController
 
     public function orderDetailFirst($id)
     {
-        return $this->orderDetail->all('*,order_details.id as id, barangs.name as nama_barang')
-        ->with('barangDesc')->where('order_id',' = ',$id)->get()[0];
+        
+        $order_detail =  $this->orderDetail->all('*,order_details.id as id, barangs.name as nama_barang')
+        ->with('barangDesc')->where('order_id',' = ',$id)->get();
+    
+        return $order_detail[0] ?? null;
     }
 }

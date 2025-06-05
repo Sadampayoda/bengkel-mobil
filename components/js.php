@@ -557,6 +557,7 @@
         delete data.jenis
         delete data.satuan
         delete data.harga
+        delete data.supplier
         url = window.location.protocol + '//' + window.location.hostname
         Swal.fire({
             title: "Apakah yakin dengan data ini?",
@@ -582,6 +583,7 @@
         delete data.jenis
         delete data.satuan
         delete data.harga
+        delete data.supplier
         url = window.location.protocol + '//' + window.location.hostname
         Swal.fire({
             title: "Apakah yakin dengan data ini?",

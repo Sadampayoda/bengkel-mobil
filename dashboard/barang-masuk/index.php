@@ -11,6 +11,7 @@ ob_start() ?>
 
 
 <?php
+$search = '/dashboard/barang-masuk/';
 
 // var_dump($data->index());
 $title = 'Barang Masuk';

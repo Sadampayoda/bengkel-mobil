@@ -19,15 +19,18 @@ class StokController
     public function index()
     {
         if (isset($_GET['start']) || isset($_GET['end'])) {
-            return $this->model->all('*,stok_barangs.created_at as tanggal,stok_barangs.id as id,barangs.name as nama_barang')
+            $date = $this->model->all('*,stok_barangs.created_at as tanggal,stok_barangs.id as id,barangs.name as nama_barang')
                 ->with('barangDesc')
                 ->whereBetween('stok_barangs.created_at', $_GET['start'], $_GET['end'])
                 ->get();
+            return $date ?? [];
         }
         if (isset($_GET['search'])) {
-            return $this->model->all('*,stok_barangs.created_at as tanggal,stok_barangs.id as id,barangs.name as nama_barang')
+            $search = $this->model->all('*,stok_barangs.created_at as tanggal,stok_barangs.id as id,barangs.name as nama_barang')
                 ->with('barangDesc')
-                ->where('stok_barangs.name', 'LIKE', '%' . $_GET['search'] . '%')->get();
+                ->search(['barangs.name','stok_barangs.stok'],$_GET['search'])
+                ->get();
+            return $search ?? [];
         }
         return $this->model->all('*,stok_barangs.created_at as tanggal, stok_barangs.id as id,barangs.name as nama_barang')
             ->with('barangDesc')
@@ -45,6 +48,7 @@ class StokController
             return null;
         }
         $row = $this->model->all('*,stok_barangs.created_at as tanggal, stok_barangs.id as id,barangs.name as nama_barang')
+        ->with('barangDesc')
         ->where('stok_barangs.id', ' = ', $id)->get();
         return $row[0] ?? null;
     }

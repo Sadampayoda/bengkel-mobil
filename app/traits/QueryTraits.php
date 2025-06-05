@@ -65,4 +65,17 @@ trait QueryTraits
 
         return $relational;
     }
+
+    public function search(array $search,$value)
+    {
+        $length = count($search);
+        $this->query .= " WHERE ";
+        foreach ($search as $index => $row) {
+            $this->query .= " ".$row." LIKE '%$value%' ";
+            if(($index + 1) !== $length){
+                $this->query .= " OR ";
+            }
+        }
+        return $this;
+    }
 }

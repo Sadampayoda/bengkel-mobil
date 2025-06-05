@@ -18,7 +18,8 @@ class SupplierController {
     {
         if (isset($_GET['search'])) {
             return $this->model->all('*,created_at as tanggal')
-                ->where('name', 'LIKE', '%' . $_GET['search'] . '%')->get();
+            ->search(['name','alamat','telepon','active'],$_GET['search'])
+            ->get();
         }
 
         if (isset($_GET['start']) || isset($_GET['end'])) {
